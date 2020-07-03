@@ -2,7 +2,7 @@
   <div>
     <client-only>
       <div class="Nav">
-        <b-navbar variant="faded" type="light">
+        <b-navbar variant="faded" type="light" class="t">
           <b-navbar-brand href="/">
             <img src="~assets/2.png" width="50px" heifgt="50px" alt="Kitten" />
             <a>PRE-FRESHY</a>
@@ -17,11 +17,13 @@
                 <nuxt-link
                   :to="{ name: 'member-id', params: { id: users.uid } }"
                   v-if="(users.role == 'member')"
-                >หน้าใช้งาน</nuxt-link>
+                  >หน้าใช้งาน</nuxt-link
+                >
                 <nuxt-link
                   :to="{ name: 'staff-id', params: { id: users.uid } }"
                   v-if="(users.role == 'staff')"
-                >หน้าใช้งาน</nuxt-link>
+                  >หน้าใช้งาน</nuxt-link
+                >
               </li>
             </ul>
           </b-navbar-nav>
@@ -29,14 +31,15 @@
             <div class="navbar" v-if="users">
               <span style="padding: 10px;">สวัสดีคุณ {{ users.name }}</span>
               <!-- มีกล่องจดหมาย BET ด้วย -->
-              <b-button variant="outline-danger" @click="signout">LOGOUT</b-button>
+              <b-button variant="outline-danger" @click="signout"
+                >LOGOUT</b-button
+              >
             </div>
             <div class="navbar" v-else>
               <nuxt-link to="/login">
-                <b-button variant="outline-primary">LOGIN</b-button>
-              </nuxt-link>
-              <nuxt-link to="/signup">
-                <b-button variant="outline-secondary">register</b-button>
+                <b-button variant="outline-primary" class="login"
+                  >LOGIN</b-button
+                >
               </nuxt-link>
             </div>
           </b-navbar-nav>
@@ -54,9 +57,7 @@ export default {
       user: '',
     }
   },
-  asyncData(context) {
-    
-    },
+  asyncData(context) {},
   computed: {
     users() {
       return this.$store.getters.getUser
@@ -75,6 +76,7 @@ export default {
 
 body {
   font-family: 'Montserrat', 'Kanit', sans-serif;
+  background: #e4f1fe;
 }
 .ulNav {
   display: inline-block;
@@ -92,7 +94,15 @@ body {
   background: lightgray;
   color: red;
 }
+.login {
+  margin: 0 10px;
+  width: 100px;
+}
+.t {
+  overflow: auto;
+}
 .Nav {
+  background: white;
   box-shadow: 6px 6px 7px rgba(0, 0, 0, 0.15);
 }
 </style>

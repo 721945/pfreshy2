@@ -1,12 +1,24 @@
 <template>
   <div class="content">
-    <b-card header="รายชื่อเพื่อนทั้งหมด" class="text-center" header-bg-variant="secondary">
+    <b-card
+      header="รายชื่อเพื่อนทั้งหมด"
+      class="text-center"
+      header-bg-variant="secondary"
+    >
       <div class="cover-button">
         <!-- Load All ? Data -->
-        <b-button class="buttonConfig" @click="changeLoad(1)" variant="info">ดูที่ตัวเองท้า</b-button>
-        <b-button class="buttonConfig" @click="changeLoad(2)" variant="warning">ดูคำท้าที่ได้รับ</b-button>
-        <b-button class="buttonConfig" @click="changeLoad(3)" variant="danger">ดูคำท้าที่ยอมรับ</b-button>
-        <b-button class="buttonConfig" @click="changeLoad(4)" variant="dark">ดูผลทั้งหมด</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(1)" variant="info"
+          >ดูที่ตัวเองท้า</b-button
+        >
+        <b-button class="buttonConfig" @click="changeLoad(2)" variant="warning"
+          >ดูคำท้าที่ได้รับ</b-button
+        >
+        <b-button class="buttonConfig" @click="changeLoad(3)" variant="danger"
+          >ดูคำท้าที่ยอมรับ</b-button
+        >
+        <b-button class="buttonConfig" @click="changeLoad(4)" variant="dark"
+          >ดูผลทั้งหมด</b-button
+        >
       </div>
       <!-- Show Bet Accept -->
       <betSend :load="load" />
@@ -23,16 +35,17 @@ import betGot from '@/components/member/bet/betGot'
 import betAccept from '@/components/member/bet/betAccept'
 import betResult from '@/components/member/bet/betResult'
 export default {
-  components:{
+  components: {
     betSend,
     betGot,
-    betAccept,betResult
+    betAccept,
+    betResult,
   },
-  data(){
-        return{
-        perPage: 5,
-        currentPage: 1,        
-        fields: [
+  data() {
+    return {
+      perPage: 5,
+      currentPage: 1,
+      fields: [
         {
           key: 'player1',
           label: 'คนท้า',
@@ -49,16 +62,17 @@ export default {
           key: 'coin',
           label: 'มูลค่า',
           sortable: true,
-        }],
-      items:[],
-        load:0,
-      }
-  },
-  methods:{
-    changeLoad(X){
-      this.load = X
+        },
+      ],
+      items: [],
+      load: 1,
     }
-  }
+  },
+  methods: {
+    changeLoad(X) {
+      this.load = X
+    },
+  },
 }
 </script>
 <style>

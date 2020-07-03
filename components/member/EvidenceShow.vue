@@ -1,10 +1,18 @@
 <template>
   <div class="Ebox">
     <b-card header="หลักฐานที่มี" class="text-center" header-bg-variant="info">
-      <b-button class="Ebox2" variant="outline-primary" v-b-modal.modal-eve>ซื้อหลักฐาน</b-button>
+      <b-button
+        @click="query"
+        class="Ebox2"
+        variant="outline-primary"
+        v-b-modal.modal-eve
+        >ซื้อหลักฐาน</b-button
+      >
       <div class="Evidence">
         <b-list-group v-if="evidences.length && users">
-          <b-list-group-item v-for="evidence in evidences" :key="evidence">{{ evidence }}</b-list-group-item>
+          <b-list-group-item v-for="evidence in evidences" :key="evidence">{{
+            evidence
+          }}</b-list-group-item>
         </b-list-group>
         <span v-else class="Noev">ไม่มีหลักฐานจ้า</span>
       </div>
@@ -19,14 +27,34 @@
       title="ซื้อหลักฐาน"
     >
       <div class="cont">
-        <span class="showmoney">{{'TEAM COIN : ' + cointeam + ' coins'}}</span>
-        <span class="showmoney2">{{'ราคา : ' + cost + ' coins'}}</span>
+        <span class="showmoney">{{
+          'TEAM COIN : ' + cointeam + ' coins'
+        }}</span>
+        <span class="showmoney2">{{ 'ราคา : ' + cost + ' coins' }}</span>
         <b-form @submit="buy">
-          <b-input class="inputbox" type="number" v-model.number="tobuy" min="0"></b-input>
-          <b-button class="Mybuts" @click="buy" variant="outline-success" :disabled="isValid">ซื้อ</b-button>
+          <b-input
+            class="inputbox"
+            type="number"
+            v-model.number="tobuy"
+            min="0"
+            :max="this.cointeam / 500"
+          ></b-input>
+          <b-button
+            class="Mybuts"
+            @click="buy"
+            variant="outline-success"
+            :disabled="isValid"
+            >ซื้อ</b-button
+          >
         </b-form>
-        <p style="color:red; margin-top:20px;">* หลักฐานชิ้นละ 500 coin</p>
-        <p v-if="isValid" style="color:red;">* กรอกตามจำนวนเงินที่มีน้า :D</p>
+        <b-alert style="margin-top: 5px;" show variant="warning"
+          >หลักฐานชิ้นละ 500 coin</b-alert
+        >
+        <p v-if="isValid">
+          <b-alert style="margin-top: 5px;" show variant="danger">
+            ไม่พอนะ !
+          </b-alert>
+        </p>
       </div>
     </b-modal>
   </div>
@@ -37,38 +65,42 @@ export default {
   props: {},
   data() {
     return {
-      evidences:[],
-      cointeam:0,
-      value:0,
-      tobuy:0,
+      evidences: [],
+      cointeam: 0,
+      value: 0,
+      tobuy: 0,
     }
   },
   async mounted() {
-      await this.$store.dispatch('loadEvidence')
-      this.evidences = this.$store.getters.getEvidence
-      this.cointeam = await this.$store.getters.getCoinTeam
+    await this.$store.dispatch('loadEvidence')
+    this.evidences = this.$store.getters.getEvidence
+    this.cointeam = await this.$store.getters.getCoinTeam
   },
   computed: {
     evidencez() {
       return this.$store.getters.getEvidence
-    },users(){
+    },
+    users() {
       return this.$store.getters.getUser
     },
-    isValid() {      
-        return (this.tobuy < 0 ||this.cointeam <= 0 || this.cointeam < this.cost )     
+    isValid() {
+      return this.tobuy < 0 || this.cointeam <= 0 || this.cointeam < this.cost
     },
-    cost(){
-      return this.tobuy * 500;
-    }
+    cost() {
+      return this.tobuy * 500
+    },
   },
-  beforeDestroy(){
-    this.$store.commit('setEvidence','')
+  beforeDestroy() {
+    this.$store.commit('setEvidence', '')
   },
   methods: {
     buy() {
       this.$store.dispatch('discountTeamCoin', this.cost)
       this.$store.dispatch('buyEve', this.tobuy)
       this.$bvModal.hide('modal-eve')
+    },
+    async query() {
+      this.cointeam = await this.$store.getters.getCoinTeam
     },
   },
 }
@@ -115,7 +147,7 @@ export default {
   background: #555;
 }
 .cont {
-  height: 200px;
+  max-height: 300px;
 }
 .showmoney {
   margin: 0 auto;

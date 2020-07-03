@@ -1,12 +1,13 @@
 <template>
-  <div style="margin-top:10px">
+  <div style="margin-top: 10px;">
     <!-- Using modifiers -->
     <b-button
       v-b-modal.modal-Lot
       variant="outline-danger"
       class="Mybut"
       @click="query"
-    >ล็อตเตอรี่ค้าบ</b-button>
+      >ล็อตเตอรี่ค้าบ</b-button
+    >
     <!-- The modal -->
     <b-modal
       id="modal-Lot"
@@ -25,24 +26,29 @@
                 <input
                   type="checkbox"
                   :id="'A' + nums"
-                  v-model="lottery[nums-1]"
-                  :disabled="boughts[nums-1]"
+                  v-model="lottery[nums - 1]"
+                  :disabled="boughts[nums - 1]"
                 />
-                <label :for="'A' + nums">{{nums}}</label>
+                <label :for="'A' + nums">{{ nums }}</label>
               </li>
             </ol>
           </li>
         </ol>
-        <p style="color:red" v-if="isValid">* ตังไม่พอซื้อนะ !</p>
+        <p style="color: red;" v-if="isValid">* ตังไม่พอซื้อนะ !</p>
         <div class="buy">
-          <a style="margin:10px;">{{'ราคา : ' + costing+ ' coin'}}</a>
+          <a style="margin: 10px;">{{ 'ราคา : ' + costing + ' coin' }}</a>
           <b-button
             class="buybutton"
             variant="primary"
             @click="buyLottery"
             :disabled="isValid"
-          >ซื้อเลย !</b-button>
+            >ซื้อเลย !</b-button
+          >
         </div>
+        <b-alert style="float: left;" show
+          >สีเทา = ซื้อไปแล้ว สีแดง = สามารถซื้อได้ สีเขียว =
+          เลือกจะซื้อ</b-alert
+        >
       </b-form>
     </b-modal>
   </div>
@@ -52,65 +58,69 @@
 export default {
   data() {
     return {
-      lottery:[],
-      boughts:[],
-      costing:0,
+      lottery: [],
+      boughts: [],
+      costing: 0,
     }
   },
-  async created(){
+  async created() {
     this.$store.commit('setFalseLottery')
   },
-  updated(){
-      this.boughts =  this.$store.getters.getLottery;    
+  updated() {
+    this.boughts = this.$store.getters.getLottery
   },
-  async mounted(){
-    
+  async mounted() {
     await this.$store.dispatch('setLotteryAll')
-    this.boughts = this.$store.getters.getLottery;
+    this.boughts = this.$store.getters.getLottery
   },
-  computed:{
-    number(){
+  computed: {
+    number() {
       var k = []
-      for (let i = 1 ; i <= 100 ; i++)
-      {
+      for (let i = 1; i <= 100; i++) {
         k.push(i)
       }
       return k
     },
-    cost(){
-      let costs = 0;
-      for (let i = 1; i <= 100 ;i++){
-        this.lottery[i-1] == true ? costs+=10 : '';
+    cost() {
+      let costs = 0
+      for (let i = 1; i <= 100; i++) {
+        this.lottery[i - 1] == true ? (costs += 10) : ''
       }
-      return this.costing = costs
+      return (this.costing = costs)
     },
-    bought(){
+    bought() {
       return this.$store.getters.getLottery
-    },users(){
+    },
+    users() {
       return this.$store.getters.getUser
-    },isValid() {      
-        return (this.users.coin < 0 || this.boughts <= 0 || this.users.coin < this.costing )     
+    },
+    isValid() {
+      return (
+        this.users.coin < 0 ||
+        this.boughts <= 0 ||
+        this.users.coin < this.costing
+      )
+    },
+    test() {
+      return this.$store.getters.getBetSend
     },
   },
   methods: {
     async buyLottery() {
       this.$store.dispatch('buyLottery', this.lottery)
-      this.$store.dispatch('discountMoney',this.cost)
+      this.$store.dispatch('discountMoney', this.cost)
       this.$bvModal.hide('modal-Lot')
-      
     },
-    reset(){
-      this.costing=0;
-      for (let i = 0 ; i < 100 ; i++)
-      {
-        this.lottery[i] = false;
-
+    reset() {
+      this.costing = 0
+      for (let i = 0; i < 100; i++) {
+        this.lottery[i] = false
       }
     },
-    async query(){
-      this.reset();
-      this.boughts =  this.$store.getters.getLottery;
-    }
+    async query() {
+      this.reset()
+      this.boughts = this.$store.getters.getLottery
+    },
   },
 }
 </script>
@@ -159,7 +169,7 @@ input[type='checkbox']:checked + label {
 }
 input[type='checkbox']:disabled + label {
   background: #dddddd;
-  text-indent: -9999px;
+  /* text-indent: -9999px; */
   overflow: hidden;
 }
 input[type='checkbox']:disabled:after {

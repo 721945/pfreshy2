@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <cointeam />
     <div class="section_area">
       <div class="coin cards">
         <b-card class="text-center">
@@ -12,8 +13,12 @@
       <div class="buttonAll cards" id="buttonDiv">
         <PicturePop :image="userPic" />
         <DonatePop style="margin-top: 10px;" />
-        <nuxt-link :to="{ name: 'member-id-bet', params: { id: $route.params.id } }">
-          <b-button variant="outline-warning" class="Mybut">เดิมพันฉันและเธอ</b-button>
+        <nuxt-link
+          :to="{ name: 'member-id-bet', params: { id: $route.params.id } }"
+        >
+          <b-button variant="outline-warning" class="Mybut"
+            >เดิมพันฉันและเธอ</b-button
+          >
         </nuxt-link>
 
         <Lottery />
@@ -32,27 +37,30 @@ import PicturePop from '@/components/member/PicturePop'
 import DonatePop from '@/components/member/DonatePop'
 import TeamList from '@/components/member/TeamList'
 import Lottery from '@/components/member/Lottery'
+import cointeam from '@/components/teamcoin'
 export default {
-    layout:'defaultmember',
-      components: {
+  layout: 'defaultmember',
+  components: {
     showCoin,
     showEvidence,
     PicturePop,
     TeamList,
     DonatePop,
-    Lottery
+    Lottery,
+    cointeam,
   },
-  computed:{
- users() {
+  computed: {
+    users() {
       return this.$store.getters.getUser
-    },userPic(){
+    },
+    userPic() {
       return this.$store.getters.getPicture
-    }
+    },
   },
   asyncData(context) {
     return {
       // userCoin:this.$store.getters.getCoin
-    }    
+    }
   },
 }
 </script>

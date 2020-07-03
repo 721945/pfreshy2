@@ -44,4 +44,7 @@ export default {
   getBetResult(state) {
     if (state.bet.betSend) return state.bet.betResult
   },
+  getAllTeamCoin(state) {
+    if (state.allteamcoin) return state.allteamcoin
+  },
 }

@@ -6,4 +6,5 @@ export default () => ({
   evidence: [],
   allfriend: [],
   bet: { betSend: [], betGot: [], betAccept: [], betResult: [] },
+  allteamcoin: [],
 })

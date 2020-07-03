@@ -54,7 +54,16 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/firebase',
+    'nuxt-fontawesome',
   ],
+  fontawesome: {
+    imports: [
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas'],
+      },
+    ],
+  },
   firebase: {
     config: {
       apiKey: 'AIzaSyAivWrPDOGnH1ZeahoKP8t_B1o-98k7yRU',
