@@ -2,6 +2,7 @@
   <div class="Ebox">
     <b-card header="หลักฐานที่มี" class="text-center" header-bg-variant="info">
       <b-button
+        v-if="users ? (users.boss == true ? true : false) : false"
         @click="query"
         class="Ebox2"
         variant="outline-primary"
@@ -107,6 +108,9 @@ export default {
 </script>
 
 <style scoped>
+.card-body {
+  height: 288px;
+}
 .Noev {
   font-size: 40px;
   padding-top: 0px;

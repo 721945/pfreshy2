@@ -161,7 +161,7 @@ input[type='checkbox'] {
   opacity: 0;
 }
 input[type='checkbox']:checked + label {
-  background: #bada55;
+  background: #d2527f;
   -webkit-animation-name: rubberBand;
   animation-name: rubberBand;
   animation-duration: 300ms;
@@ -199,7 +199,7 @@ label {
   font-weight: bold;
   line-height: 1.5rem;
   padding: 4px 0;
-  background: #f42536;
+  background: #e9d460;
   border-radius: 5px;
   animation-duration: 300ms;
   animation-fill-mode: both;
@@ -253,6 +253,16 @@ label:hover {
   100% {
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
+  }
+}
+@media only screen and (max-width: 480px) {
+  .seat {
+    flex: 0 0 10%;
+  }
+}
+@media only screen and (max-width: 990px) {
+  .seat {
+    flex: 0 0 10%;
   }
 }
 </style>
