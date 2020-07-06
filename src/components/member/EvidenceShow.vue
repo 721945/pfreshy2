@@ -7,14 +7,19 @@
         class="Ebox2"
         variant="outline-primary"
         v-b-modal.modal-eve
-      >ซื้อหลักฐาน</b-button>
+        >ซื้อหลักฐาน</b-button
+      >
       <div class="Evidence">
-        <b-list-group v-if="evidences.length && users" style="text-align:left;">
-          <b-list-group-item v-for="(evidence,index) in evidences" :key="evidence">
+        <b-list-group
+          v-if="evidences.length && users"
+          style="text-align: left;"
+        >
+          <b-list-group-item
+            v-for="(evidence, index) in evidences"
+            :key="evidence"
+          >
             <span>
-              {{
-              index+1 + ') ' + evidence
-              }}
+              {{ index + 1 + ') ' + evidence }}
             </span>
           </b-list-group-item>
         </b-list-group>
@@ -32,9 +37,7 @@
     >
       <div class="cont">
         <span class="showmoney">
-          {{
-          'TEAM COIN : ' + cointeam + ' coins'
-          }}
+          {{ 'TEAM COIN : ' + cointeam + ' coins' }}
         </span>
         <span class="showmoney2">{{ 'ราคา : ' + cost + ' coins' }}</span>
         <b-form @submit="buy">
@@ -45,11 +48,21 @@
             min="0"
             :max="this.cointeam / 500"
           ></b-input>
-          <b-button class="Mybuts" @click="buy" variant="outline-success" :disabled="isValid">ซื้อ</b-button>
+          <b-button
+            class="Mybuts"
+            @click="buy"
+            variant="outline-success"
+            :disabled="isValid"
+            >ซื้อ</b-button
+          >
         </b-form>
-        <b-alert style="margin-top: 5px;" show variant="warning">หลักฐานชิ้นละ 500 coin</b-alert>
+        <b-alert style="margin-top: 5px;" show variant="warning"
+          >หลักฐานชิ้นละ 500 coin</b-alert
+        >
         <p v-if="isValid">
-          <b-alert style="margin-top: 5px;" show variant="danger">ไม่พอนะ !</b-alert>
+          <b-alert style="margin-top: 5px;" show variant="danger"
+            >ไม่พอนะ !</b-alert
+          >
         </p>
       </div>
     </b-modal>
@@ -111,7 +124,7 @@ export default {
   padding-top: 0px;
 }
 .Evidence {
-  height: 200px;
+  max-height: 200px;
   width: 100%;
   overflow: auto;
 }

@@ -1,0 +1,25 @@
+{
+  "entry": "server.js",
+  "files": {
+    "pages/admin/index.js": "pages/admin/index.js",
+    "pages/index.js": "pages/index.js",
+    "pages/login.js": "pages/login.js",
+    "pages/member/[_]id/bet/_p2.js": "pages/member/[_]id/bet/_p2.js",
+    "pages/member/[_]id/bet/index.js": "pages/member/[_]id/bet/index.js",
+    "pages/member/[_]id/index.js": "pages/member/[_]id/index.js",
+    "pages/member/index.js": "pages/member/index.js",
+    "pages/staff/[_]id/index.js": "pages/staff/[_]id/index.js",
+    "server.js": "server.js"
+  },
+  "maps": {
+    "pages/admin/index.js": "pages/admin/index.js.map",
+    "pages/index.js": "pages/index.js.map",
+    "pages/login.js": "pages/login.js.map",
+    "pages/member/[_]id/bet/_p2.js": "pages/member/[_]id/bet/_p2.js.map",
+    "pages/member/[_]id/bet/index.js": "pages/member/[_]id/bet/index.js.map",
+    "pages/member/[_]id/index.js": "pages/member/[_]id/index.js.map",
+    "pages/member/index.js": "pages/member/index.js.map",
+    "pages/staff/[_]id/index.js": "pages/staff/[_]id/index.js.map",
+    "server.js": "server.js.map"
+  }
+}

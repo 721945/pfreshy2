@@ -1,22 +1,36 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "pfreshy2",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "serve": "firebase emulators:start --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "export": "nuxt export",
+    "serve": "nuxt serve"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "dependencies": {
-    "firebase-admin": "^8.10.0",
-    "firebase-functions": "^3.6.1"
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/vue-fontawesome": "^0.1.10",
+    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/firebase": "^6.1.0",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
+    "core-js": "^2.6.11",
+    "express": "^4.17.1",
+    "firebase": "^7.15.5",
+    "firebase-admin": "^8.13.0",
+    "firebase-functions": "^3.7.0",
+    "nuxt": "^2.13.0",
+    "nuxt-fontawesome": "^0.4.0"
   },
   "devDependencies": {
-    "firebase-functions-test": "^0.2.0"
-  },
-  "private": true
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5"
+  }
 }

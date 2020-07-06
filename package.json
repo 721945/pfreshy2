@@ -7,7 +7,17 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "export": "nuxt export",
-    "serve": "nuxt serve"
+    "serve": "nuxt serve",
+    "build:firebase": "yarn clean && yarn build && yarn copy && cd \"functions\" && yarn",
+    "clean": "yarn clean:public && yarn clean:functions && yarn clean:static",
+    "clean:functions": "rimraf \"functions/node_modules\" && rimraf \"functions/.nuxt\"",
+    "clean:public": "rimraf \"public/**/*.*!(md)\" && rimraf \"public/_nuxt\"",
+    "clean:static": "rimraf \"src/static/sw.js\"",
+    "copy": "yarn copy:nuxt && yarn copy:static",
+    "copy:nuxt": "xcopy \"functions\\.nuxt\\dist\\*\" \"public\\_nuxt\\\" /E /Y",
+    "copy:static": "xcopy \"src\\static\\*\" \"public\\\" /E /Y",
+    "start:firebase": "firebase serve --only functions,hosting",
+    "deploy": "firebase deploy --only functions,hosting"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
@@ -22,7 +32,8 @@
     "firebase": "^7.15.5",
     "firebase-functions": "^3.7.0",
     "nuxt": "^2.13.0",
-    "nuxt-fontawesome": "^0.4.0"
+    "nuxt-fontawesome": "^0.4.0",
+    "v8": "^0.1.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "^6.11.0",

@@ -1,4 +1,6 @@
 export default {
+  srcDir: "src",
+  buildDir: "functions/.nuxt",
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
@@ -98,5 +100,7 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    extractCSS: true,
+  },
 };
