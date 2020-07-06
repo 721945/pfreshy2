@@ -3,31 +3,45 @@
     <b-card header="Menu" class="text-center" header-bg-variant="secondary">
       <div class="cover-button">
         <!-- Load All ? Data -->
-        <b-button class="buttonConfig" @click="changeLoad(1)" variant="info">จัดกลุ่มน้องๆ</b-button>
-        <b-button class="buttonConfig" @click="changeLoad(2)" variant="success">ให้ coin น้อง</b-button>
-        <b-button class="buttonConfig" @click="changeLoad(3)" variant="warning">หัก coin น้อง</b-button>
-        <b-button class="buttonConfig" @click="changeLoad(4)" variant="danger">หัก coin ทีม</b-button>
-        <b-button class="buttonConfig" @click="changeLoad(5)" variant="dark">ดูประวัติ</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(1)" variant="info">กลุ่มที่จัด</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(4)" variant="danger">เพิ่ม coin ทีม</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(5)" variant="secondary">หัก coin ทีม</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(6)" variant="dark">ดูประวัติ</b-button>
       </div>
-      <!-- Show Bet Accept -->
-      <!-- <betSend :load="load" />
-      <betGot :load="load" />
-      <betAccept :load="load" />
-      <betResult :load="load" />-->
+      <div class="showcontent" v-if="load == 1">
+        <groupMember />
+      </div>
+      <div class="showcontent" v-if="load == 4">
+        <span class="text3">
+          <b-alert varaint="primary" show>เพิ่ม COIN ให้น้อง !</b-alert>
+        </span>
+        <teamcoin :load="load" />
+      </div>
+      <div class="showcontent" v-if="load == 5">
+        <span class="text3">
+          <b-alert variant="danger" show>ลด COIN น้อง !</b-alert>
+        </span>
+        <teamcoin :load="load" />
+      </div>
+      <div class="showcontent" v-if="load == 6">
+        <betlog />
+      </div>
     </b-card>
   </div>
 </template>
 
 <script>
-import betSend from '@/components/member/bet/betSend'
-import betGot from '@/components/member/bet/betGot'
-import betAccept from '@/components/member/bet/betAccept'
-import betResult from '@/components/member/bet/betResult'
+import memberlist from '@/components/staff/memberlist'
+import groupMember from '@/components/staff/groupMember'
+import betlog from '@/components/staff/betlog'
+import teamcoin from '@/components/teamcoin'
+
 export default {
   components:{
-    betSend,
-    betGot,
-    betAccept,betResult
+    memberlist,
+    teamcoin,
+    groupMember,
+    betlog
   },
   data(){
         return{
@@ -52,7 +66,7 @@ export default {
           sortable: true,
         }],
       items:[],
-        load:0,
+        load:1,
       }
   },
   methods:{
@@ -88,7 +102,7 @@ export default {
   margin: 20px auto;
   border-radius: 5px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
-  max-height: 600px;
+  max-height: 800px;
   overflow: hidden;
 }
 </style>

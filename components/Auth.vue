@@ -76,14 +76,14 @@ export default {
           this.$router.push('/')
         })
       } catch (e) {
-        alert(e)
+        alert('USERNAME / PASSWORD ไม่ถูกต้อง ')
       }
     },
     async logout() {
       try {
         await this.$fireAuth.signOut()
       } catch (e) {
-        alert(e)
+        alert('เกิดข้อผิดพลาด')
       }
     },
   },

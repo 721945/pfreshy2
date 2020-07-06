@@ -13,13 +13,10 @@
       <div class="buttonAll cards" id="buttonDiv">
         <PicturePop :image="userPic" />
         <DonatePop style="margin-top: 10px;" />
-        <nuxt-link
-          :to="{ name: 'member-id-bet', params: { id: $route.params.id } }"
-        >
-          <b-button variant="outline-warning" class="Mybut"
-            >เดิมพันฉันและเธอ</b-button
-          >
+        <nuxt-link :to="{ name: 'member-id-bet', params: { id: $route.params.id } }">
+          <b-button variant="outline-warning" class="Mybut">เดิมพันฉันและเธอ</b-button>
         </nuxt-link>
+        <changepassword />
 
         <Lottery />
       </div>
@@ -37,6 +34,7 @@ import PicturePop from '@/components/member/PicturePop'
 import DonatePop from '@/components/member/DonatePop'
 import TeamList from '@/components/member/TeamList'
 import Lottery from '@/components/member/Lottery'
+import changepassword from '@/components/member/changepassword'
 import cointeam from '@/components/teamcoin'
 export default {
   layout: 'defaultmember',
@@ -48,6 +46,7 @@ export default {
     DonatePop,
     Lottery,
     cointeam,
+    changepassword,
   },
   computed: {
     users() {
@@ -88,6 +87,7 @@ export default {
     'coin evidence'
     'button friendlist';
   grid-gap: 20px;
+  margin-bottom: 10px;
 }
 .coin {
   grid-area: coin;
@@ -97,6 +97,7 @@ export default {
 }
 .buttonAll {
   grid-area: button;
+  background: white;
 }
 .listfriend {
   grid-area: friendlist;

@@ -5,6 +5,7 @@
       <b-card header="รายชื่อเพื่อนทั้งหมด" class="text-center" header-bg-variant="info">
         <div class="overflow-auto">
           <b-input placeholder="ค้นหาด้วยชื่อ" v-model="search" class="in"></b-input>
+          <b-input placeholder="ค้นหาด้วยเลขนักศึกษา" v-model="search2" class="in"></b-input>
           <b-pagination
             v-if="this.listFilter.length > perPage"
             v-model="currentPage"
@@ -26,7 +27,7 @@
               <nuxt-link
                 :to="{ name: 'member-id-bet-p2', params: { id: $route.params.id , p2:data.value}}"
               >
-                <b-button>ท้า</b-button>
+                <b-button variant="primary">ท้า</b-button>
               </nuxt-link>
             </template>
           </b-table>
@@ -65,7 +66,8 @@ betMenu
             key:'uid',
             label: '*',
         }],items:[],
-        search:''
+        search:'',
+        search2:''
       }
     },
     methods:{
@@ -81,8 +83,9 @@ betMenu
     computed:{
       listFilter () {
         let text = this.search.trim()
+        let text2 = this.search2.trim()
         return this.items.filter(item => {
-          return item.name.includes(text)
+          return item.name.includes(text) && item.sid.includes(text2)
         })
       },
       rows(){

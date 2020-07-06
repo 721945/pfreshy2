@@ -6,8 +6,7 @@
       variant="outline-danger"
       class="Mybut"
       @click="query"
-      >ล็อตเตอรี่ค้าบ</b-button
-    >
+    >ล็อตเตอรี่ค้าบ</b-button>
     <!-- The modal -->
     <b-modal
       id="modal-Lot"
@@ -42,13 +41,13 @@
             variant="primary"
             @click="buyLottery"
             :disabled="isValid"
-            >ซื้อเลย !</b-button
-          >
+          >ซื้อเลย !</b-button>
         </div>
-        <b-alert style="float: left;" show
-          >สีเทา = ซื้อไปแล้ว สีแดง = สามารถซื้อได้ สีเขียว =
-          เลือกจะซื้อ</b-alert
-        >
+        <b-alert style="float: left;" show variant="light">
+          <span style="background:#dddddd; color:black">สีเทา</span> คือเลขที่ซื้อไปแล้ว |
+          <span style="background:#e9d460; color:black">สีเหลือง</span> คือเลขที่สามารถซื้อได้ |
+          <span style="background:#d2527f; color:black">สีชมพู</span> คือเลขที่เลือกจะซื้อ
+        </b-alert>
       </b-form>
     </b-modal>
   </div>

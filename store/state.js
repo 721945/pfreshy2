@@ -7,4 +7,5 @@ export default () => ({
   allfriend: [],
   bet: { betSend: [], betGot: [], betAccept: [], betResult: [] },
   allteamcoin: [],
-})
+  group: [],
+});

@@ -10,9 +10,7 @@
         aria-controls="my-table"
         align="center"
       ></b-pagination>
-      <p class="mt-3" v-if="this.rows > this.perPage">
-        Current Page: {{ currentPage }}
-      </p>
+      <p class="mt-3" v-if="this.rows > this.perPage">Current Page: {{ currentPage }}</p>
       <b-table
         v-if="this.items.length > 0"
         id="my-table"
@@ -31,16 +29,17 @@
             <b-button>ท้า</b-button>
           </nuxt-link>
         </template>
+        <template v-slot:cell(winner)="data">
+          <span>{{ data.item.winner == data.item.player1 ? data.item.name1 : data.item.name2}}</span>
+        </template>
       </b-table>
     </div>
     <div class="show-content" v-else>
-      <a class="notext"
-        ><b-alert show variant="warning"> ไม่มีข้อมูล !</b-alert></a
-      >
+      <a class="notext">
+        <b-alert show variant="warning">ไม่มีข้อมูล !</b-alert>
+      </a>
     </div>
-    <a v-show="st != 0">
-      {{ test }}
-    </a>
+    <a v-show="st != 0">{{ test }}</a>
     <div class="testalert"></div>
   </div>
 </template>
@@ -72,6 +71,10 @@ export default {
           label: 'มูลค่า',
           sortable: true,
         },
+        {
+          key:'winner',
+          label:'ผู้ชนะ'
+        }
       ],
       items: [],
       st: 0,

@@ -4,8 +4,10 @@
 
 <script>
 export default {
-  mounted() {
-    this.$router.push('/')
+  async mounted() {
+    var curuse = this.$store.getter.getUser
+    if (curuse)
+    this.$router.push('/member'+ curuse.uid)
   },
 }
 </script>
