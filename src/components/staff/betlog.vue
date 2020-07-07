@@ -158,7 +158,6 @@ export default {
     }
     await this.$store.dispatch('LoadBetStaff')
     this.items = await this.$store.getters.getMemberBet
-    console.log(this.items);
     // await this.$store.dispatch('LoadGroup')
     // this.items = this.$store.getters.getGroup
   },
