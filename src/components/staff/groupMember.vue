@@ -208,10 +208,6 @@ export default {
       await this.$store.dispatch('AddCoinFromGroup',{data:this.selected,coin:this.number}).then(()=>{
       })
       this.items = this.$store.getters.getGroup
-      setTimeout(()=>{
-        // alert('SUCCESS')
-        // window.location.reload(true)
-      },3000)
       alert('SUCCESS')
       this.number = 0
       this.selected = []
@@ -228,14 +224,16 @@ export default {
 
   computed:{
     listFilter () {
-      let k = this.s
       this.s=0
+      this.items = this.items
       let text = this.search.trim()
       let text2 = this.search2.trim()
-      if (this.items.length > 0)
-      return this.items.filter(item => {
+      if (this.items.length > 0 && this.s == 0)
+      {
+        return this.items.filter(item => {
           return (item.name.includes(text)|| item.realname.includes(text)) && item.sid.includes(text2)
       })
+      }
       else
       return ''
     },

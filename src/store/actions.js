@@ -570,6 +570,7 @@ export default {
           const res = await memberRef.update({ coin: coinleft })
 
           commit('setGroupCoin', { ...data, coinleft: coinleft })
+          commit('setMemberCoinGG', { ...data, coinleft: coinleft })
         } catch (error) {
           console.log(error.message)
         }
@@ -580,7 +581,6 @@ export default {
   },
   async DeletMemberFromGroup({ commit, state }, form) {
     try {
-      console.log(form)
       let w = JSON.parse(JSON.stringify(form))
       w.forEach((element) => {
         delete element.picture

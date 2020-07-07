@@ -244,6 +244,13 @@ export default {
       coin: payload.coinleft,
     }
   },
+  setMemberCoinGG(state, payload) {
+    let x = state.allfriend.findIndex((each) => each.uid == payload.uid)
+    state.allfriend[x] = {
+      ...state.group[x],
+      coin: payload.coinleft,
+    }
+  },
   setBetStaff(state, payload) {
     let win = 0
     let lose = 0
