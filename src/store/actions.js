@@ -614,10 +614,12 @@ export default {
     }
   },
   async LoadBetStaff({ commit, state }) {
+    commit('resetBetStaff', '')
     const BetRef = this.$fireStore.collection('BetResult')
     try {
       let friends = state.allfriend
       friends.forEach(async (mem) => {
+        console.log(mem)
         const Res = await BetRef.where('player2', '==', mem.uid).get()
         const Res2 = await BetRef.where('player1', '==', mem.uid).get()
         const ResAll = Res.docs.concat(Res2.docs)

@@ -240,8 +240,6 @@ export default {
     let lose = 0
     let all = 0
     if (payload.data.length > 0) {
-      state.memberbet = []
-
       payload.data.forEach((element2) => {
         let qData = element2.data()
         if (qData.winner == payload.uid) win++
@@ -256,5 +254,8 @@ export default {
       lose: lose,
       all: all,
     })
+  },
+  resetBetStaff(state, payload) {
+    state.memberbet = []
   },
 }

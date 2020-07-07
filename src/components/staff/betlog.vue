@@ -7,11 +7,6 @@
       <div class="overflow-auto">
         <b-input placeholder="ค้นหาด้วยชื่อ" v-model="search" class="in"></b-input>
         <b-input placeholder="ค้นหาด้วยเลขนักศึกษา" v-model="search2" class="in"></b-input>
-        <b-button
-          variant="danger"
-          style="float:right; margin-top:5px margin-bottom:5px; padding:5px;"
-          @click="DeleteFromGroup"
-        >นำออกจากกลุ่ม</b-button>
         <b-pagination
           v-if="this.listFilter.length > perPage"
           v-model="currentPage"
@@ -132,33 +127,6 @@ export default {
       if(this.currentPage > 1)
         this.currentPage--
     },
-    onRowSelected (value, index) {
-      if(this.selected.length > 0)
-        if (!this.selected.includes(value)) {
-            this.selected.push(value)
-        }
-        else{
-          let x = this.selected.findIndex(each => each == value)
-          this.selected.splice(x, 1)
-        }
-      else
-        this.selected.push(value)
-    },
-    test(item){
-        if(this.selected)
-          if (this.selected.includes(item))
-          {
-            return true;
-            }
-          return false;
-        return false
-    },
-    async DeleteFromGroup(){
-        await this.$store.dispatch('DeletMemberFromGroup',this.selected)
-        this.items = this.$store.getters.getGroup
-        this.selected = []
-        this.s = 2
-    }
   },
 
   computed:{
@@ -182,19 +150,20 @@ export default {
     },
   },
   async mounted() {
-    this.items = await this.$store.getters.getAllFriend
-    if(this.items.length == 0)
+    this.item = await this.$store.getters.getAllFriend
+    if(this.item.length == 0)
     {
       await this.$store.dispatch('getAllMember')
       
     }
     await this.$store.dispatch('LoadBetStaff')
     this.items = await this.$store.getters.getMemberBet
+    console.log(this.items);
     // await this.$store.dispatch('LoadGroup')
     // this.items = this.$store.getters.getGroup
   },
   beforeDestroy(){
-    this.$store.commit('setGroup','')
+    this.$store.commit('resetBetStaff','')
   }
 }
 </script>

@@ -15,7 +15,8 @@ export default {
       }
     },
     mounted(){
-      if(!this.u)
+      this.u = this.$store.getters.getUser
+    if(!this.u)
       this.$router.push('/login')
     else{
       if (this.u.role != 'staff')
