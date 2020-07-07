@@ -1,24 +1,12 @@
 <template>
   <div class="content">
-    <b-card
-      header="รายชื่อเพื่อนทั้งหมด"
-      class="text-center"
-      header-bg-variant="secondary"
-    >
+    <b-card header="รายการท้า" class="text-center" header-bg-variant="secondary">
       <div class="cover-button">
         <!-- Load All ? Data -->
-        <b-button class="buttonConfig" @click="changeLoad(1)" variant="info"
-          >ดูที่ตัวเองท้า</b-button
-        >
-        <b-button class="buttonConfig" @click="changeLoad(2)" variant="warning"
-          >ดูคำท้าที่ได้รับ</b-button
-        >
-        <b-button class="buttonConfig" @click="changeLoad(3)" variant="danger"
-          >ดูคำท้าที่ยอมรับ</b-button
-        >
-        <b-button class="buttonConfig" @click="changeLoad(4)" variant="dark"
-          >ดูผลทั้งหมด</b-button
-        >
+        <b-button class="buttonConfig" @click="changeLoad(1)" variant="info">ดูคำท้าของตัวเอง</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(2)" variant="warning">ดูคำท้าที่ได้รับ</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(3)" variant="danger">ดูคำท้าที่ยอมรับ</b-button>
+        <b-button class="buttonConfig" @click="changeLoad(4)" variant="dark">ดูผล</b-button>
       </div>
       <!-- Show Bet Accept -->
       <betSend :load="load" />
@@ -101,7 +89,7 @@ export default {
   margin: 20px auto;
   border-radius: 5px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
-  max-height: 600px;
+  max-height: 800px;
   overflow: hidden;
 }
 </style>

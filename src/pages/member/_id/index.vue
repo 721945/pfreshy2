@@ -37,6 +37,12 @@ import Lottery from '@/components/member/Lottery'
 import changepassword from '@/components/member/changepassword'
 import cointeam from '@/components/teamcoin'
 export default {
+  data(){
+    return {
+      u:{},
+    }
+
+  },
   layout: 'defaultmember',
   components: {
     showCoin,
@@ -56,11 +62,18 @@ export default {
       return this.$store.getters.getPicture
     },
   },
-  asyncData(context) {
-    return {
-      // userCoin:this.$store.getters.getCoin
+  mounted(){
+    this.u = this.$store.getters.getUser
+    if(!this.u)
+      this.$router.push('/login')
+    else{
+      if (this.u.role != 'member')
+        this.$router.push('/')
+      else
+        if (this.u.uid != this.$route.params.id)
+          this.$router.push('/member/'+this.u.uid)
     }
-  },
+  }
 }
 </script>
 <style scoped>

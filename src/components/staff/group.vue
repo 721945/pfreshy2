@@ -92,6 +92,10 @@ export default {
         label: 'รหัสนักศึกษา',
         sortable: true,
       },
+       {
+        key: 'realname',
+        label: 'ชื่อจริง',
+      },
       {
         key: 'name',
         label: 'ชื่อเล่น',
@@ -192,7 +196,7 @@ export default {
       let text2 = this.search2.trim()
       if (this.items.length > 0)
       return this.items.filter(item => {
-          return item.name.includes(text) && item.sid.includes(text2)
+          return (item.name.includes(text)|| item.realname.includes(text)) && item.sid.includes(text2)
       })
       else
         return ''

@@ -9,6 +9,21 @@ import groupselect from '@/components/staff/group'
 export default {
     components:{
         groupselect
+    },data(){
+      return {
+        u:{}
+      }
+    },
+    mounted(){
+      if(!this.u)
+      this.$router.push('/login')
+    else{
+      if (this.u.role != 'staff')
+        this.$router.push('/')
+      else
+        if (this.u.uid != this.$route.params.id)
+          this.$router.push('/staff/'+this.u.uid)
+    }
     }
 }
 </script>

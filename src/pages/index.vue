@@ -114,4 +114,9 @@ h1 {
     transform: translateX(200%);
   }
 }
+@media only screen and (max-width: 400px) {
+  .textHeader {
+    padding: 20px;
+  }
+}
 </style>

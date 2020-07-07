@@ -1,25 +1,25 @@
 <template>
   <div class="content">
-    <b-card
-      header="รายชื่อเพื่อนทั้งหมด"
-      class="text-center"
-      header-bg-variant="info"
-    >
-      <span class="textshow">{{
+    <b-card header="รายชื่อเพื่อนทั้งหมด" class="text-center" header-bg-variant="info">
+      <span class="textshow">
+        {{
         friend[0] ? 'ต้องการท้า ' + friend[0].name : ' '
-      }}</span>
+        }}
+      </span>
       <br />
-      <span class="textshow">{{
+      <span class="textshow">
+        {{
         friend[0] ? 'มี ' + friend[0].coin + ' coin' : ' '
-      }}</span>
+        }}
+      </span>
+      <br />
+      <span class="textshow2">
+        {{
+        users ? 'คุณมี ' + users.coin + ' coin' : '' }}
+      </span>
       <b-form>
         <label for="topic">ต้องการจะท้าให้เพื่อนทำอะไร</label>
-        <b-input
-          id="topic"
-          type="text"
-          v-model="form.topic"
-          placeholder="สิ่งที่ต้องการจะท้า"
-        ></b-input>
+        <b-input id="topic" type="text" v-model="form.topic" placeholder="สิ่งที่ต้องการจะท้า"></b-input>
         <label for="coin">มูลค่า</label>
         <b-input
           id="coin"
@@ -27,25 +27,20 @@
           type="number"
           :max="more"
           v-model.number="form.coin"
-          placeholder="หัวข้อที่ต้องการจะท้า"
+          placeholder="จำนวน coin"
         ></b-input>
-        <div class="" v-if="friend[0]">
+        <div class v-if="friend[0]">
           <b-button
             class="button"
             @click="betSend"
-            variant="primary"
+            variant="outline-primary"
             :disabled="isValid"
-            >ท้าไปเล้ย !</b-button
-          >
-          <nuxt-link
-            :to="{ name: 'member-id-bet', params: { id: $route.params.id } }"
-          >
-            <b-button class="button" variant="danger">ยกเลิก</b-button>
+          >ท้าไปเล้ย !</b-button>
+          <nuxt-link :to="{ name: 'member-id-bet', params: { id: $route.params.id } }">
+            <b-button class="button" variant="outline-danger">ยกเลิก</b-button>
           </nuxt-link>
         </div>
-        <p v-if="this.coinleft < 1" style="color: red;">
-          * อย่างน้อยต้องมี 1 coin น้า :D
-        </p>
+        <p v-if="this.coinleft < 1" style="color: red;">* อย่างน้อยต้องมี 1 coin น้า :D</p>
         <p
           v-if="
             this.friend[0]
@@ -55,11 +50,22 @@
               : false < 1
           "
           style="color: red;"
-        >
-          * อย่างน้อยเพื่อนต้องมี 1 coin นะ! :D
+        >* อย่างน้อยเพื่อนต้องมี 1 coin นะ! :D</p>
+        <p v-if="form.coin < 1" style="color: red;">
+          <b-alert
+            show
+            variant="danger"
+            style="margin-top:10px;
+            width:55%;"
+          >* อย่างน้อยต้อง 1 coin ! :D</b-alert>
         </p>
         <p v-if="isValid" style="color: red;">
-          * กรอกตามจำนวนเงินที่สามารถกรอกได้นะ ! :D
+          <b-alert
+            show
+            variant="danger"
+            style="margin-top:10px;
+            width:55%;"
+          >* กรอกตามจำนวนเงินที่สามารถกรอกได้นะ ! :D</b-alert>
         </p>
       </b-form>
     </b-card>
@@ -81,15 +87,17 @@ export default {
       },
       friend: [],
       coinleft: 0,
+      u:{}
     }
   },
   methods: {
-    betSend() {
+    async betSend() {
       this.$store.dispatch('createBet', {
         ...this.form,
         name1: this.users.name,
         name2: this.friend[0].name,
       })
+      await this.$store.dispatch('discountMoney', this.form.coin)
       this.$router.push('/member/' + this.$route.params.id + '/bet')
     },
   },
@@ -116,6 +124,16 @@ export default {
   },
 
   async mounted() {
+    if(!this.u)
+      this.$router.push('/login')
+    else{
+      if (this.u.role != 'member')
+        this.$router.push('/')
+      else
+        if (this.u.uid != this.$route.params.id)
+          this.$router.push('/member/'+this.u.uid)
+
+    }
     await this.$store.dispatch('getSearchMember', this.$route.params.p2)
     this.friend = this.$store.getters.getAllFriend
     this.coinleft = this.$store.getters.getUser.coin
@@ -129,6 +147,10 @@ export default {
 <style scoped>
 .textshow {
   font-size: 45px;
+  margin-bottom: 10px;
+}
+.textshow {
+  font-size: 25px;
   margin-bottom: 10px;
 }
 label {

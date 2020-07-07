@@ -25,7 +25,6 @@
           hover
           fixed
           ref="selectableTable"
-          selectable
           id="my-table"
           :per-page="perPage"
           :current-page="currentPage"
@@ -34,7 +33,6 @@
           responsive="sm"
         >
           <!-- Example scoped slot for select state illustrative purposes -->
-          <template v-slot:cell(selected)="{item}">{{'x'}}</template>
         </b-table>
       </div>
     </div>
@@ -60,14 +58,14 @@ export default {
       perPage: 5,
       currentPage: 1,        
       fields: [
-        {
-          key:'selected',
-          label :'selected'
-        },
       {
         key: 'sid',
         label: 'รหัสนักศึกษา',
         sortable: true,
+      },
+      {
+        key: 'realname',
+        label: 'ชื่อจริง',
       },
       {
         key: 'name',
@@ -79,24 +77,21 @@ export default {
         sortable: true,
       },
       {
-        key: 'betwin',
+        key: 'win',
         label: 'ชนะ',
         sortable: true,
       },
       {
-        key: 'betlose',
+        key: 'lose',
         label: 'แพ้',
         sortable: true,
       },
       {
-        key: 'betall',
+        key: 'all',
         label: 'ทั้งหมด',
         sortable: true,
       },
-      {
-          key:'uid',
-          label: '*',
-      }],items:[],
+      ],items:[],
       item:[],
       search:'',
       search2:'',
@@ -120,7 +115,6 @@ export default {
       this.s = 2
     },
     async DiscountCoin(){
-      
       this.s = 2
     },
     rowClicked(item) {
@@ -175,7 +169,7 @@ export default {
       let text2 = this.search2.trim()
       if (this.items.length > 0)
       return this.items.filter(item => {
-          return item.name.includes(text) && item.sid.includes(text2)
+          return (item.name.includes(text)|| item.realname.includes(text)) && item.sid.includes(text2) 
       })
       else
       return ''
@@ -188,11 +182,16 @@ export default {
     },
   },
   async mounted() {
-    this.item = await this.$store.getters.getAllFriend
-    if(this.item.length == 0)
+    this.items = await this.$store.getters.getAllFriend
+    if(this.items.length == 0)
+    {
       await this.$store.dispatch('getAllMember')
-    await this.$store.dispatch('LoadGroup')
-    this.items = this.$store.getters.getGroup
+      
+    }
+    await this.$store.dispatch('LoadBetStaff')
+    this.items = await this.$store.getters.getMemberBet
+    // await this.$store.dispatch('LoadGroup')
+    // this.items = this.$store.getters.getGroup
   },
   beforeDestroy(){
     this.$store.commit('setGroup','')

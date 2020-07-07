@@ -10,9 +10,7 @@
         aria-controls="my-table"
         align="center"
       ></b-pagination>
-      <p class="mt-3" v-if="this.rows > this.perPage">
-        Current Page: {{ currentPage }}
-      </p>
+      <p class="mt-3" v-if="this.rows > this.perPage">Current Page: {{ currentPage }}</p>
       <b-table
         hover
         id="my-table"
@@ -26,21 +24,19 @@
           <b
             class="text-warning"
             v-if="data.item.winner == users.uid || data.item.loser == users.uid"
-            >รอผลของอีกฝ่าย</b
-          >
+          >รอผลของอีกฝ่าย</b>
           <b
             class="text-danger"
             v-else-if="data.item.winner != '' || data.item.loser != ''"
-            >รอผลจากคุณ</b
-          >
+          >รอผลจากคุณ</b>
           <b class="text-info" v-else>รอผลจากทั้งสองฝ่าย</b>
         </template>
       </b-table>
     </div>
     <div class="show-content" v-else>
-      <a class="notext"
-        ><b-alert show variant="warning"> ไม่มีข้อมูล !</b-alert></a
-      >
+      <a class="notext">
+        <b-alert show variant="warning">ไม่มีข้อมูล !</b-alert>
+      </a>
     </div>
     <b-modal id="modal-c" title="ได้เวลาหาผู้ชนะแล้ว !" centered hide-footer>
       <div class="inmodal">
@@ -51,9 +47,7 @@
       <b-button class="buttons" @click="Win" variant="warning">เราชนะ</b-button>
       <b-button class="buttons" @click="lose" variant="dark">เราแพ้</b-button>
     </b-modal>
-    <a v-show="st != 0">
-      {{ test }}
-    </a>
+    <a v-show="st != 0">{{ test }}</a>
   </div>
 </template>
 
@@ -92,9 +86,11 @@ export default {
       bet: {},
       items: [],
       st: 0,
+      u:{},
     }
   },
   async mounted() {
+    
     await this.$store.dispatch('LoadBetAccept')
     this.items = this.$store.getters.getBetAccept
   },

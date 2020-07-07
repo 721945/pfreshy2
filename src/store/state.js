@@ -8,4 +8,5 @@ export default () => ({
   bet: { betSend: [], betGot: [], betAccept: [], betResult: [] },
   allteamcoin: [],
   group: [],
-});
+  memberbet: [],
+})

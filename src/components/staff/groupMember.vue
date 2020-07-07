@@ -8,10 +8,25 @@
         <b-input placeholder="ค้นหาด้วยชื่อ" v-model="search" class="in"></b-input>
         <b-input placeholder="ค้นหาด้วยเลขนักศึกษา" v-model="search2" class="in"></b-input>
         <b-button
-          variant="danger"
-          style="float:right; margin-top:5px margin-bottom:5px; padding:5px;"
+          variant="success"
+          style="float:left; margin:5px 5px; padding:5px;"
+          @click="selectAll"
+        >เลือกทั้งหมด</b-button>
+        <b-button
+          variant="warning"
+          style="float:left; margin:5px 5px; padding:5px;"
+          @click="unselectAll"
+        >เอาที่เลือกออกทั้งหมด</b-button>
+        <b-button
+          variant="dark"
+          style="float:right;margin:5px 5px; padding:5px;"
           @click="DeleteFromGroup"
         >นำออกจากกลุ่ม</b-button>
+        <b-button
+          variant="info"
+          style="float:right; margin:5px 5px; padding:5px;"
+          v-b-modal.modal-5
+        >เพิ่ม coin คนที่เลือก</b-button>
         <b-pagination
           v-if="this.listFilter.length > perPage"
           v-model="currentPage"
@@ -25,7 +40,6 @@
           hover
           fixed
           ref="selectableTable"
-          selectable
           id="my-table"
           :per-page="perPage"
           :current-page="currentPage"
@@ -49,24 +63,26 @@
             <b-button
               variant="primary"
               style="width:70px;"
-              v-b-modal.modal-1
+              v-b-modal.modal-3
               @click="set(item.uid,index)"
             >เพิ่ม</b-button>
             <b-button
               variant="success"
               style="width:70px;"
-              v-b-modal.modal-2
+              v-b-modal.modal-4
               @click="set(item.uid,index)"
             >ลด</b-button>
           </template>
         </b-table>
       </div>
     </div>
-
-    <b-modal id="modal-1" title="เพิ่ม COIN" centered @ok="addCoin">
+    <b-modal id="modal-3" title="เพิ่ม COIN" centered @ok="addCoin">
       <b-input v-model.number="number" min="0" type="number"></b-input>
     </b-modal>
-    <b-modal id="modal-2" title="ลด COIN" centered @ok="DiscountCoin">
+    <b-modal id="modal-4" title="ลด COIN" centered @ok="DiscountCoin">
+      <b-input v-model.number="number" min="0" type="number"></b-input>
+    </b-modal>
+    <b-modal id="modal-5" title="เพิ่ม COIN ในกลุ่ม" centered @ok="AddFromGroup">
       <b-input v-model.number="number" min="0" type="number"></b-input>
     </b-modal>
     <div class="s" v-if="s == 1">{{h}}</div>
@@ -94,6 +110,10 @@ export default {
         sortable: true,
       },
       {
+        key: 'realname',
+        label: 'ชื่อจริง',
+      },
+      {
         key: 'name',
         label: 'ชื่อเล่น',
       },
@@ -113,6 +133,7 @@ export default {
       listFilt:[],
       number:0,
       uid:'',
+      value:0,
       index:0,
       s:0,
       loadedArray : []
@@ -126,10 +147,19 @@ export default {
       this.index = index
     },
     async addCoin(){
+      await this.$store.dispatch('addCoinS',{uid:this.uid , coin:this.number ,  index:this.index})
+      this.items = this.$store.getters.getGroup
+      this.uid = 0
+      this.index = 0
+      this.number = 0
       this.s = 2
     },
     async DiscountCoin(){
-      
+      await this.$store.dispatch('addCoinS',{uid:this.uid , coin:-this.number ,  index:this.index})
+      this.items = this.$store.getters.getGroup
+      this.uid = 0
+      this.index = 0
+      this.number = 0
       this.s = 2
     },
     rowClicked(item) {
@@ -173,6 +203,21 @@ export default {
         this.items = this.$store.getters.getGroup
         this.selected = []
         this.s = 2
+    },
+    async AddFromGroup(){
+      await this.$store.dispatch('AddCoinFromGroup',{data:this.selected,coin:this.number})
+      window.location.reload(true)
+      this.items = this.$store.getters.getGroup
+      console.log(this.items);
+      this.number = 0
+      this.selected = []
+      this.s = 2
+    },
+    selectAll(){
+      this.selected = this.listFilter
+    },
+    unselectAll(){
+      this.selected = []
     }
   },
 
@@ -184,7 +229,7 @@ export default {
       let text2 = this.search2.trim()
       if (this.items.length > 0)
       return this.items.filter(item => {
-          return item.name.includes(text) && item.sid.includes(text2)
+          return (item.name.includes(text)|| item.realname.includes(text)) && item.sid.includes(text2)
       })
       else
       return ''
@@ -193,8 +238,11 @@ export default {
       return this.listFilter.length
     },
     h(){
-      return this.items = this.$store.getters.getAllFriend
+      return this.items = this.$store.getters.getGroup
     },
+  },
+  updated(){
+     this.items = this.$store.getters.getGroup
   },
   async mounted() {
     this.item = await this.$store.getters.getAllFriend

@@ -10,9 +10,7 @@
         aria-controls="my-table"
         align="center"
       ></b-pagination>
-      <p class="mt-3" v-if="this.rows > this.perPage">
-        Current Page: {{ currentPage }}
-      </p>
+      <p class="mt-3" v-if="this.rows > this.perPage">Current Page: {{ currentPage }}</p>
       <b-table
         hover
         id="my-table"
@@ -24,9 +22,9 @@
       ></b-table>
     </div>
     <div class="show-content" v-else>
-      <a class="notext"
-        ><b-alert show variant="warning"> ไม่มีข้อมูล !</b-alert></a
-      >
+      <a class="notext">
+        <b-alert show variant="warning">ไม่มีข้อมูล !</b-alert>
+      </a>
     </div>
     <b-modal
       id="modal-a"
@@ -41,9 +39,7 @@
       <br />
       <a>{{ 'จำนวน : ' + bet.coin + ' coin' }}</a>
     </b-modal>
-    <a v-show="st != 0">
-      {{ test }}
-    </a>
+    <a v-show="st != 0">{{ test }}</a>
   </div>
 </template>
 
@@ -85,6 +81,9 @@ export default {
     this.items = this.$store.getters.getBetGot
   },
   computed: {
+     users() {
+      return this.$store.getters.getUser
+    },
     rows() {
       return this.items.length
     },
@@ -96,12 +95,21 @@ export default {
     this.items = this.$store.getters.getBetGot
   },
   methods: {
-    accepted() {
-      this.$store.dispatch('BetAccept', this.bet)
+    async accepted() {
+      if (this.users.coin >= this.bet.coin){
+        this.$store.dispatch('BetAccept', this.bet)
+        await this.$store.dispatch('discountMoney', this.bet.coin)
+        this.items = this.$store.getters.getBetGot
+      }
+      else{
+        alert('COIN ไม่พอ !')
+      }
       // this.$router.push('/member/'+ this.$route.params.id+'/bet')
     },
-    refuse() {
+    async refuse() {
       this.$store.dispatch('BetRefuse', this.bet)
+      await this.$store.dispatch('BetRefund', this.bet)
+      this.items = this.$store.getters.getBetGot
     },
     showModal(item) {
       this.bet = { ...item }

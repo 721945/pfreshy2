@@ -1,6 +1,10 @@
 <template>
-  <section v-if="this.teamCoin.length>0">
-    <div class="card card-x" v-for="(eachteam,index) in teamCoin" :key="eachteam.team">
+  <section v-if="this.teamCoin.length > 0">
+    <div
+      class="card card-x"
+      v-for="(eachteam, index) in teamCoin"
+      :key="eachteam.team"
+    >
       <div class="card-body">
         <div>
           <font-awesome-icon
@@ -20,9 +24,15 @@
           <div class="text-right">
             <h5
               v-if="
-              user != null ? (user.team == eachteam.team ? true : false) : false
-            "
-            >YOUR TEAM [ {{ eachteam.team }} ]</h5>
+                user != null
+                  ? user.team == eachteam.team
+                    ? true
+                    : false
+                  : false
+              "
+            >
+              YOUR TEAM [ {{ eachteam.team }} ]
+            </h5>
             <h5 v-else>TEAM {{ eachteam.team }}</h5>
             <h3>{{ eachteam.coin }}</h3>
           </div>
@@ -31,13 +41,28 @@
       <div class="showcontent" v-if="load == 4">
         <div
           class="card-footer"
-          v-if="user != null ? (user.role == 'staff' || user.role == 'admin' ? true : false) : false"
+          v-if="
+            user != null
+              ? user.role == 'staff' || user.role == 'admin'
+                ? true
+                : false
+              : false
+          "
         >
           <form>
             <b-input-group size="sm">
-              <b-input type="number" placeholder="จำนวน Coin " min="0" v-model="formTeam[index]"></b-input>
+              <b-input
+                type="number"
+                placeholder="จำนวน Coin "
+                min="0"
+                v-model="formTeam[index]"
+              ></b-input>
               <b-input-group-append>
-                <b-button variant="outline-secondary" @click="AddTeamCoin(eachteam.team,index)">ตกลง</b-button>
+                <b-button
+                  variant="outline-secondary"
+                  @click="AddTeamCoin(eachteam.team, index)"
+                  >ตกลง</b-button
+                >
               </b-input-group-append>
             </b-input-group>
           </form>
@@ -46,13 +71,28 @@
       <div class="showcontent" v-if="load == 5">
         <div
           class="card-footer"
-          v-if="user != null ? (user.role == 'staff' || user.role == 'admin' ? true : false) : false"
+          v-if="
+            user != null
+              ? user.role == 'staff' || user.role == 'admin'
+                ? true
+                : false
+              : false
+          "
         >
           <form>
             <b-input-group size="sm">
-              <b-input type="number" placeholder="จำนวน Coin " min="0" v-model="formTeam[index]"></b-input>
+              <b-input
+                type="number"
+                placeholder="จำนวน Coin "
+                min="0"
+                v-model="formTeam[index]"
+              ></b-input>
               <b-input-group-append>
-                <b-button variant="outline-secondary" @click="DisTeamCoin(eachteam.team,index)">ตกลง</b-button>
+                <b-button
+                  variant="outline-secondary"
+                  @click="DisTeamCoin(eachteam.team, index)"
+                  >ตกลง</b-button
+                >
               </b-input-group-append>
             </b-input-group>
           </form>
@@ -64,21 +104,20 @@
 
 <script>
 export default {
-  props:{
-    load:Number,
+  props: {
+    load: Number,
   },
   data() {
     return {
-      formTeam:[],
+      formTeam: [],
       teamCoin: [],
       user: {},
-      st:0,
+      st: 0,
     }
   },
   async mounted() {
     this.teamCoin = this.$store.getters.getAllTeamCoin
-    if(this.teamCoin.length == 0)
-      await this.$store.dispatch('getAllTeamCoin')
+    if (this.teamCoin.length == 0) await this.$store.dispatch('getAllTeamCoin')
     this.teamCoin = this.$store.getters.getAllTeamCoin
     this.user = this.$store.getters.getUser
   },
@@ -89,24 +128,32 @@ export default {
     test() {
       return this.$store.getters.getAllTeamCoin
     },
-  },updated(){
-     this.teamCoin = this.$store.getters.getAllTeamCoin
+  },
+  updated() {
+    this.teamCoin = this.$store.getters.getAllTeamCoin
   },
   beforeDestroy() {
     this.$store.commit('setAllTeamCoin', '')
   },
-  methods:{
-    async DisTeamCoin(team,int){
-        await this.$store.dispatch('discountCoinTeamStaff',{coin:this.formTeam[int] , team:team , index:int})
-        this.teamCoin = this.$store.getters.getAllTeamCoin
-        this.formTeam=[]    
+  methods: {
+    async DisTeamCoin(team, int) {
+      await this.$store.dispatch('discountCoinTeamStaff', {
+        coin: this.formTeam[int],
+        team: team,
+        index: int,
+      })
+      this.teamCoin = this.$store.getters.getAllTeamCoin
+      this.formTeam = []
     },
-    async AddTeamCoin(team,int){
-      await this.$store.dispatch('discountCoinTeamStaff',{coin:-this.formTeam[int] , team:team , index:int})
-        this.teamCoin =  await this.$store.getters.getAllTeamCoin     
-        this.formTeam=[] 
+    async AddTeamCoin(team, int) {
+      await this.$store.dispatch('discountCoinTeamStaff', {
+        coin: -this.formTeam[int],
+        team: team,
+        index: int,
+      })
+      this.teamCoin = await this.$store.getters.getAllTeamCoin
+      this.formTeam = []
     },
-
   },
 }
 </script>
@@ -126,5 +173,15 @@ section {
   justify-content: center;
   /* gap: 10px; */
   /* flex-basis: 25%; */
+}
+@media only screen and (max-width: 1028px) {
+  .card-x {
+    flex: 1 0 45%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .card-x {
+    flex: 1 0 100%;
+  }
 }
 </style>

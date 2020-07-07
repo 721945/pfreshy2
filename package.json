@@ -33,6 +33,7 @@
     "firebase-functions": "^3.7.0",
     "nuxt": "^2.13.0",
     "nuxt-fontawesome": "^0.4.0",
+    "nuxt-ssr-screen-size": "github:hugojerez/nuxt-ssr-screen-size",
     "v8": "^0.1.0"
   },
   "devDependencies": {

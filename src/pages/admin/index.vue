@@ -1,9 +1,14 @@
 <template>
   <div class="content">
-    <b-input type="text" v-model="form.name"></b-input>
-    <b-input type="text" v-model="form.sid"></b-input>
-    <button @click="createUSER">กดสิจ้ะ</button>
-    <button @click="addTodb">=>{{uid}}</button>
+    ชื่อ
+    <b-input type="text" v-model="name1"></b-input>นามสกุล
+    <b-input type="text" v-model="name2"></b-input>ชื่อเล่น
+    <b-input type="text" v-model="form.name"></b-input>เลขนศ
+    <b-input type="text" v-model="form.sid"></b-input>ทีม
+    <b-input type="text" v-model="form.team"></b-input>
+    <b-button @click="createUSER" variant="success">กดสิจ้ะ</b-button>
+    <b-button @click="addTodb" variant="danger">=>{{uid}}</b-button>
+    {{form}} {{name1}}
   </div>
 </template>
 
@@ -13,26 +18,33 @@ export default {
     data(){
         return {
             form :{
-                name:'ID',
+                name:'',
                 coin:0,
                 role:'member',
-                picture:"Don't have",
-                sid:"620705010",
-                team:'a'
+                picture:"",
+                sid:"",
+                team:'',
+                boss:false
             },
             password:'123456'
-            ,uid:'10'
+            ,uid:'0',
+            name1:'',
+            name2:'',
         }
     },
     methods: {
         async addTodb(){
-            alert('test')
             const B = this.uid
             console.log(B)
             const memberRef = this.$fireStore.collection('member').doc(B)
             try {
-                const Res = await memberRef.set(this.form)
-                this.$router.push('/')
+                const Res = await memberRef.set({...this.form,realname : this.name1 + ' ' + this.name2})
+                // this.$router.push('/admin')
+                this.form.name=''
+                this.form.sid=""
+                this.form.team=''
+                this.name1=''
+                this.name2=''
             } catch (e) {
             console.log(e.message)
             return
@@ -46,7 +58,6 @@ export default {
                 const email = this.form.sid + '@pfreshy.com'
                 await this.$fireAuth.createUserWithEmailAndPassword(email,this.password).then((user) => {
                 // console.log(user.user.uid)
-                alert('kk')
                 this.uid = user.user.uid;
                 // this.addTodb()
                 })
@@ -55,7 +66,11 @@ export default {
             }
         }
             
-    },
+    },computed:{
+        real(){
+            return this.form.realname = this.name1 + ' ' + this.name2
+        }
+    }
 
     }
 </script>

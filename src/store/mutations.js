@@ -1,203 +1,210 @@
-import initialState from "./state";
+import initialState from './state'
 
 export default {
   RESET_STORE: (state) => {
-    Object.assign(state, initialState());
+    Object.assign(state, initialState())
   },
 
   SET_AUTH_USER: (state, form) => {
-    state.authUser = form;
+    state.authUser = form
   },
   setError(state, payload) {
-    state.error = payload;
+    state.error = payload
   },
   setLoading(state, payload) {
-    state.loading = payload;
+    state.loading = payload
   },
   setEvidence(state, payload) {
-    if (payload.have != 0 && payload != "") {
+    if (payload.have != 0 && payload != '') {
       for (let i = 0; i < payload.have; i++) {
-        state.evidence.push(payload.message[i]);
+        state.evidence.push(payload.message[i])
       }
-    } else state.evidence = [];
+    } else state.evidence = []
   },
   setEve(state, payload) {
     if (payload.bought != 0) {
       for (let i = payload.before; i < payload.bought; i++) {
-        state.evidence.push(payload.message[i]);
+        state.evidence.push(payload.message[i])
       }
-    } else state.evidence = [];
+    } else state.evidence = []
   },
   setFriendlist(state, payload) {
-    if (payload != "") {
+    if (payload != '') {
       payload.forEach((doc) => {
-        state.friendlist.push({ ...doc.data() });
-      });
-    } else state.friendlist = [];
+        state.friendlist.push({ ...doc.data() })
+      })
+    } else state.friendlist = []
   },
   setFriendAll(state, payload) {
-    if (payload != "") {
+    if (payload != '') {
       payload.forEach((doc) => {
         if (doc.id != state.authUser.uid) {
-          state.allfriend.push({ ...doc.data(), uid: doc.id });
+          state.allfriend.push({ ...doc.data(), uid: doc.id })
         }
-      });
-    } else state.allfriend = [];
+      })
+    } else state.allfriend = []
   },
   setFriendSearch(state, payload) {
-    if (payload) state.allfriend.push(payload);
-    else state.allfriend = [];
+    if (payload) state.allfriend.push(payload)
+    else state.allfriend = []
   },
   setCoin(state, payload) {
-    state.authUser.coin = payload;
+    state.authUser.coin = payload
   },
   setCoinTeam(state, payload) {
-    state.cointeam = payload;
+    state.cointeam = payload
   },
   setFalseLottery(state, payload) {
     for (let i = 0; i < 100; i++) {
-      state.Lottery[i] = false;
+      state.Lottery[i] = false
     }
   },
   setLottery(state, payload) {
     for (let i = 0; i < 100; i++) {
       if (payload[i] == true) {
-        state.Lottery[i] = true;
+        state.Lottery[i] = true
       }
     }
   },
   setLotteryAll(state, payload) {
     for (let i = 0; i < payload.lottery.length; i++) {
-      state.Lottery[payload.lottery[i] - 1] = true;
+      state.Lottery[payload.lottery[i] - 1] = true
     }
   },
   setBetSend(state, payload) {
-    if (payload != "") {
+    if (payload != '') {
       payload.docs.forEach((doc) => {
         state.bet.betSend.push({
           ...doc.data(),
           Betid: doc.id,
-        });
-      });
-    } else state.bet.betSend = [];
+        })
+      })
+    } else state.bet.betSend = []
   },
   setBetGot(state, payload) {
-    if (payload != "") {
+    if (payload != '') {
       payload.docs.forEach((doc) => {
         if (doc.data().accept == false) {
           state.bet.betGot.push({
             ...doc.data(),
             Betid: doc.id,
-          });
+          })
         }
-      });
-    } else state.bet.betGot = [];
+      })
+    } else state.bet.betGot = []
   },
   setBetAccept(state, payload) {
-    if (payload != "") {
+    if (payload != '') {
       // console.log(payload);
       payload.forEach((doc) => {
         state.bet.betAccept.push({
           ...doc.data(),
           Betid: doc.id,
-        });
-      });
+        })
+      })
       // console.log(state.bet.betAccept);
-    } else state.bet.betAccept = [];
+    } else state.bet.betAccept = []
   },
   setBetResult(state, payload) {
-    if (payload != "") {
+    if (payload != '') {
       payload.forEach((doc) => {
         state.bet.betResult.push({
           ...doc.data(),
           Betid: doc.id,
-        });
-      });
-    } else state.bet.betResult = [];
+        })
+      })
+    } else state.bet.betResult = []
   },
   setAccepted(state, payload) {
-    const b = state.bet.betGot;
+    const b = state.bet.betGot
     const a = b.filter((x) => {
-      return x.Betid != payload.Betid;
-    });
-    state.bet.betAccept.push(payload);
-    state.bet.betGot = a;
+      return x.Betid != payload.Betid
+    })
+    state.bet.betAccept.push(payload)
+    state.bet.betGot = a
   },
   setCancel(state, payload) {
-    const b = state.bet.betSend;
+    const b = state.bet.betSend
     const a = b.filter((x) => {
-      return x.Betid != payload.Betid;
-    });
-    state.bet.betSend = a;
+      return x.Betid != payload.Betid
+    })
+    state.bet.betSend = a
   },
   setWinLose(state, payload) {
-    const b = state.bet.betAccept;
+    const b = state.bet.betAccept
     const a = b.filter((x) => {
-      return x.Betid != payload.Betid;
-    });
-    state.bet.betResult.push(payload);
-    state.bet.betAccept = a;
+      return x.Betid != payload.Betid
+    })
+    state.bet.betResult.push(payload)
+    state.bet.betAccept = a
   },
   setRefuse(state, payload) {
-    const b = state.bet.betGot;
+    const b = state.bet.betGot
     const a = b.filter((x) => {
-      return x.Betid != payload.Betid;
-    });
-    state.bet.betGot = a;
+      return x.Betid != payload.Betid
+    })
+    state.bet.betGot = a
   },
   setAllTeamCoin(state, payload) {
-    if (payload != "") {
+    if (payload != '') {
       payload.forEach((doc) => {
         state.allteamcoin.push({
           ...doc.data(),
           team: doc.id,
-        });
-      });
-    } else state.allteamcoin = [];
+        })
+      })
+    } else state.allteamcoin = []
   },
   setTeamCoinStaff(state, payload) {
     state.allteamcoin[payload.index] = {
       coin: payload.coin,
       team: payload.team,
-    };
-    console.log(state.allteamcoin);
+    }
+    console.log(state.allteamcoin)
   },
   setTest(state, payload) {
     state.allfriend[payload.index] = {
       ...state.allfriend[payload.index],
       selected: payload.value,
-    };
+    }
   },
   setMemberCoin(state, payload) {
     state.allfriend[payload.index] = {
       ...state.allfriend[payload.index],
       coin: payload.coinleft,
-    };
+    }
+  },
+  setMemberCoinS(state, payload) {
+    state.group[payload.index] = {
+      ...state.group[payload.index],
+      coin: payload.coinleft,
+    }
   },
   setGroup(state, payload) {
     if (payload.length > 0) {
       payload.forEach((element2) => {
         if (state.group.length > 0) {
-          let x = state.allfriend.findIndex((each) => each.uid == element2.uid);
+          let x = state.allfriend.findIndex((each) => each.uid == element2.uid)
           if (!state.group.includes(state.allfriend[x])) {
-            state.group.push(state.allfriend[x]);
+            state.group.push(state.allfriend[x])
           }
         } else {
-          let x = state.allfriend.findIndex((each) => each.uid == element2.uid);
-          state.group.push(state.allfriend[x]);
+          console.log('wtf2')
+          let x = state.allfriend.findIndex((each) => each.uid == element2.uid)
+          state.group.push(state.allfriend[x])
         }
-      });
+      })
     } else {
-      state.group = [];
+      state.group = []
     }
   },
   LoadGroup(state, payload) {
-    let x = state.allfriend;
+    let x = state.allfriend
     for (let c in payload) {
       for (let g in x) {
         // console.log();
         if (x[g].uid == payload[c].uid) {
-          state.group.push(x[g]);
+          state.group.push(x[g])
         }
       }
     }
@@ -205,20 +212,49 @@ export default {
   },
   setDGroup(state, payload) {
     if (payload.length > 0) {
-      state.group = [];
+      state.group = []
       payload.forEach((element2) => {
         if (state.group.length > 0) {
-          let x = state.allfriend.findIndex((each) => each.uid == element2.uid);
+          let x = state.allfriend.findIndex((each) => each.uid == element2.uid)
           if (!state.group.includes(state.allfriend[x])) {
-            state.group.push(state.allfriend[x]);
+            state.group.push(state.allfriend[x])
           }
         } else {
-          let x = state.allfriend.findIndex((each) => each.uid == element2.uid);
-          state.group.push(state.allfriend[x]);
+          let x = state.allfriend.findIndex((each) => each.uid == element2.uid)
+          state.group.push(state.allfriend[x])
         }
-      });
+      })
     } else {
-      state.group = [];
+      state.group = []
     }
   },
-};
+  setGroupCoin(state, payload) {
+    let x = state.group.findIndex((each) => each.uid == payload.uid)
+    state.group[x] = {
+      ...state.group[x],
+      coin: payload.coinleft,
+    }
+  },
+  setBetStaff(state, payload) {
+    let win = 0
+    let lose = 0
+    let all = 0
+    if (payload.data.length > 0) {
+      state.memberbet = []
+
+      payload.data.forEach((element2) => {
+        let qData = element2.data()
+        if (qData.winner == payload.uid) win++
+        else lose++
+        all++
+      })
+    }
+    let x = state.allfriend.findIndex((each) => each.uid == payload.uid)
+    state.memberbet.push({
+      ...state.allfriend[x],
+      win: win,
+      lose: lose,
+      all: all,
+    })
+  },
+}

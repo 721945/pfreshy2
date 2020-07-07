@@ -67,7 +67,7 @@ betMenu
             label: '*',
         }],items:[],
         search:'',
-        search2:''
+        search2:'',u:{}
       }
     },
     methods:{
@@ -93,6 +93,16 @@ betMenu
       },
     },
     async mounted() {
+      this.u = this.$store.getters.getUser
+      if(!this.u)
+        this.$router.push('/login')
+      else{
+        if (this.u.role != 'member')
+          this.$router.push('/')
+        else
+          if (this.u.uid != this.$route.params.id)
+            this.$router.push('/member/'+ this.u.uid)   
+     }
       await this.$store.dispatch('getAllMember')
       this.items = this.$store.getters.getAllFriend
   },

@@ -194,7 +194,7 @@ label {
   position: relative;
   width: 100%;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   line-height: 1.5rem;
   padding: 4px 0;

@@ -2,25 +2,19 @@
   <div class="Ebox">
     <b-card header="หลักฐานที่มี" class="text-center" header-bg-variant="info">
       <b-button
-        v-if="users ? (users.boss == true ? true : false) : false"
         @click="query"
         class="Ebox2"
         variant="outline-primary"
         v-b-modal.modal-eve
-        >ซื้อหลักฐาน</b-button
-      >
+      >ซื้อหลักฐาน</b-button>
       <div class="Evidence">
         <b-list-group
           v-if="evidences.length && users"
+          :class="[users ? (users.boss == true ? 'yesboss' : 'noboss') : '']"
           style="text-align: left;"
         >
-          <b-list-group-item
-            v-for="(evidence, index) in evidences"
-            :key="evidence"
-          >
-            <span>
-              {{ index + 1 + ') ' + evidence }}
-            </span>
+          <b-list-group-item v-for="(evidence, index) in evidences" :key="evidence">
+            <span>{{ index + 1 + ') ' + evidence }}</span>
           </b-list-group-item>
         </b-list-group>
         <span v-else class="Noev">ไม่มีหลักฐานจ้า</span>
@@ -36,9 +30,7 @@
       title="ซื้อหลักฐาน"
     >
       <div class="cont">
-        <span class="showmoney">
-          {{ 'TEAM COIN : ' + cointeam + ' coins' }}
-        </span>
+        <span class="showmoney">{{ 'TEAM COIN : ' + cointeam + ' coins' }}</span>
         <span class="showmoney2">{{ 'ราคา : ' + cost + ' coins' }}</span>
         <b-form @submit="buy">
           <b-input
@@ -48,21 +40,11 @@
             min="0"
             :max="this.cointeam / 500"
           ></b-input>
-          <b-button
-            class="Mybuts"
-            @click="buy"
-            variant="outline-success"
-            :disabled="isValid"
-            >ซื้อ</b-button
-          >
+          <b-button class="Mybuts" @click="buy" variant="outline-success" :disabled="isValid">ซื้อ</b-button>
         </b-form>
-        <b-alert style="margin-top: 5px;" show variant="warning"
-          >หลักฐานชิ้นละ 500 coin</b-alert
-        >
+        <b-alert style="margin-top: 5px;" show variant="warning">หลักฐานชิ้นละ 500 coin</b-alert>
         <p v-if="isValid">
-          <b-alert style="margin-top: 5px;" show variant="danger"
-            >ไม่พอนะ !</b-alert
-          >
+          <b-alert style="margin-top: 5px;" show variant="danger">ไม่พอนะ !</b-alert>
         </p>
       </div>
     </b-modal>
@@ -116,6 +98,9 @@ export default {
 </script>
 
 <style scoped>
+.noboss {
+  height: 250px;
+}
 .card-body {
   height: 288px;
 }

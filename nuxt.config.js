@@ -1,32 +1,32 @@
 export default {
-  srcDir: "src",
-  buildDir: "functions/.nuxt",
+  srcDir: 'src',
+  buildDir: 'functions/.nuxt',
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
-  mode: "universal",
+  mode: 'universal',
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
-  target: "server",
+  target: 'server',
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: "PREFRESHY-2020" || "",
+    title: 'PREFRESHY-2020' || '',
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        hid: "description",
-        name: "description",
-        content: process.env.npm_package_description || "",
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/assets/2.ico" }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/2.ico' }],
   },
   /*
    ** Global CSS
@@ -52,35 +52,35 @@ export default {
    */
   modules: [
     // Doc: https://bootstrap-vue.js.org
-    "bootstrap-vue/nuxt",
+    'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
-    "@nuxtjs/axios",
-    "@nuxtjs/firebase",
-    "nuxt-fontawesome",
+    '@nuxtjs/axios',
+    '@nuxtjs/firebase',
+    'nuxt-fontawesome',
   ],
   fontawesome: {
     imports: [
       {
-        set: "@fortawesome/free-solid-svg-icons",
-        icons: ["fas"],
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas'],
       },
     ],
   },
   firebase: {
     config: {
-      apiKey: "AIzaSyAivWrPDOGnH1ZeahoKP8t_B1o-98k7yRU",
-      authDomain: "prefreshy-1d048.firebaseapp.com",
-      databaseURL: "https://prefreshy-1d048.firebaseio.com",
-      projectId: "prefreshy-1d048",
-      storageBucket: "prefreshy-1d048.appspot.com",
-      messagingSenderId: "987834299834",
-      appId: "1:987834299834:web:4a7a4760436d164ade5983",
-      measurementId: "G-Z0P6SZ4HCN",
+      apiKey: 'AIzaSyAivWrPDOGnH1ZeahoKP8t_B1o-98k7yRU',
+      authDomain: 'prefreshy-1d048.firebaseapp.com',
+      databaseURL: 'https://prefreshy-1d048.firebaseio.com',
+      projectId: 'prefreshy-1d048',
+      storageBucket: 'prefreshy-1d048.appspot.com',
+      messagingSenderId: '987834299834',
+      appId: '1:987834299834:web:4a7a4760436d164ade5983',
+      measurementId: 'G-Z0P6SZ4HCN',
     },
     services: {
       auth: {
         initialize: {
-          onAuthStateChangedAction: "onAuthStateChanged",
+          onAuthStateChangedAction: 'onAuthStateChanged',
         },
         ssr: true,
       },
@@ -103,4 +103,4 @@ export default {
   build: {
     extractCSS: true,
   },
-};
+}
