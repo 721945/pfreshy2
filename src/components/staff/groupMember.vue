@@ -205,13 +205,18 @@ export default {
         this.s = 2
     },
     async AddFromGroup(){
-      await this.$store.dispatch('AddCoinFromGroup',{data:this.selected,coin:this.number})
-      window.location.reload(true)
+      await this.$store.dispatch('AddCoinFromGroup',{data:this.selected,coin:this.number}).then(()=>{
+      })
       this.items = this.$store.getters.getGroup
-      console.log(this.items);
+      setTimeout(()=>{
+        // alert('SUCCESS')
+        // window.location.reload(true)
+      },3000)
+      alert('SUCCESS')
       this.number = 0
       this.selected = []
       this.s = 2
+      
     },
     selectAll(){
       this.selected = this.listFilter

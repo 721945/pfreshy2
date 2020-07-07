@@ -27,7 +27,7 @@
               <nuxt-link
                 :to="{ name: 'member-id-bet-p2', params: { id: $route.params.id , p2:data.value}}"
               >
-                <b-button variant="primary">ท้า</b-button>
+                <b-button variant="outline-danger" :disabled="isIt(data.item.coin)">ท้า</b-button>
               </nuxt-link>
             </template>
           </b-table>
@@ -91,6 +91,11 @@ betMenu
       rows(){
         return this.listFilter.length
       },
+      isIt(){
+        return (coin)=>{
+          return coin <= 0
+        }
+      }
     },
     async mounted() {
       this.u = this.$store.getters.getUser
@@ -114,6 +119,9 @@ betMenu
 </script>
 
 <style scoped>
+button:disabled {
+  background: #dddddd;
+}
 .in {
   margin-bottom: 15px;
 }

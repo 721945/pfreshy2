@@ -3,16 +3,14 @@
     <b-card header="หลักฐานที่มี" class="text-center" header-bg-variant="info">
       <b-button
         @click="query"
+        v-if="users ? (users.boss == true ? true : false) : false"
         class="Ebox2"
         variant="outline-primary"
         v-b-modal.modal-eve
-      >ซื้อหลักฐาน</b-button>
-      <div class="Evidence">
-        <b-list-group
-          v-if="evidences.length && users"
-          :class="[users ? (users.boss == true ? 'yesboss' : 'noboss') : '']"
-          style="text-align: left;"
-        >
+        :disabled="isMoreThanfifty"
+      >{{isMoreThanfifty ? 'ไม่สามารถซื้อได้แล้ว !' :'ซื้อหลักฐาน' }} {{isMoreThanfifty }}</b-button>
+      <div class="Evidence" :class="[users ? (users.boss == true ? 'yesboss' : 'noboss') : '']">
+        <b-list-group v-if="evidences.length && users" style="text-align: left;">
           <b-list-group-item v-for="(evidence, index) in evidences" :key="evidence">
             <span>{{ index + 1 + ') ' + evidence }}</span>
           </b-list-group-item>
@@ -40,7 +38,12 @@
             min="0"
             :max="this.cointeam / 500"
           ></b-input>
-          <b-button class="Mybuts" @click="buy" variant="outline-success" :disabled="isValid">ซื้อ</b-button>
+          <b-button
+            class="Mybuts"
+            @click="buy"
+            variant="outline-success"
+            :disabled="isValid || isMoreThanfifty"
+          >ซื้อ</b-button>
         </b-form>
         <b-alert style="margin-top: 5px;" show variant="warning">หลักฐานชิ้นละ 500 coin</b-alert>
         <p v-if="isValid">
@@ -80,15 +83,23 @@ export default {
     cost() {
       return this.tobuy * 500
     },
+    isMoreThanfifty(){
+      return this.evidences.length >= 49
+    }
   },
   beforeDestroy() {
     this.$store.commit('setEvidence', '')
   },
   methods: {
     buy() {
-      this.$store.dispatch('discountTeamCoin', this.cost)
+      if (this.evidences.length < 50){
+
+        this.$store.dispatch('discountTeamCoin', this.cost)
       this.$store.dispatch('buyEve', this.tobuy)
       this.$bvModal.hide('modal-eve')
+      }
+      else
+        alert('ซื้อหลักฐานได้เพียง 49 ชิ้นเท่านั้น')
     },
     async query() {
       this.cointeam = await this.$store.getters.getCoinTeam
@@ -119,6 +130,9 @@ export default {
 .Ebox2 {
   width: 100%;
   margin-bottom: 10px;
+}
+.noboss {
+  max-height: 300px;
 }
 .font {
   font-family: 'Kanit', sans-serif;

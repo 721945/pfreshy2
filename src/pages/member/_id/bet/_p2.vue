@@ -124,6 +124,7 @@ export default {
   },
 
   async mounted() {
+    this.u = this.$store.getters.getUser
     if(!this.u)
       this.$router.push('/login')
     else{

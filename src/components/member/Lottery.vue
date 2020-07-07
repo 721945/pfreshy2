@@ -33,12 +33,12 @@
             </ol>
           </li>
         </ol>
-        <p style="color: red;" v-if="isValid">* ตังไม่พอซื้อนะ !</p>
+        <p style="color: red;" v-if="isValid">* COIN ไม่พอซื้อนะ !</p>
         <div class="buy">
-          <a style="margin: 10px;">{{ 'ราคา : ' + costing + ' coin' }}</a>
+          <a style="margin: 10px;">{{ 'ราคา : ' + cost + ' coin' }}</a>
           <b-button
             class="buybutton"
-            variant="primary"
+            variant="outline-primary"
             @click="buyLottery"
             :disabled="isValid"
           >ซื้อเลย !</b-button>
@@ -94,9 +94,7 @@ export default {
       return this.$store.getters.getUser
     },
     isValid() {
-      return (
-        this.users.coin < 0 ||
-        this.boughts <= 0 ||
+      return !( this.users.coin < 0 && this.boughts <= 0 &&
         this.users.coin < this.costing
       )
     },

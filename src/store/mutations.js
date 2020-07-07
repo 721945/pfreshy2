@@ -147,10 +147,20 @@ export default {
   },
   setAllTeamCoin(state, payload) {
     if (payload != '') {
+      let teamname = ''
       payload.forEach((doc) => {
+        if (doc.id == 'a') teamname = 'สคิลลาถลาลม'
+        else if (doc.id == 'b') teamname = 'กริฟฟินอย่ามาดิ้นกับพี่'
+        else if (doc.id == 'c') teamname = 'เมดูซ่าก็มาดิค๊าบ'
+        else if (doc.id == 'd') teamname = 'นกฟินิกส์จิกเด็กตาย'
+        else if (doc.id == 'e') teamname = 'สฟิงค์สุดสวิงริงโก้'
+        else if (doc.id == 'f') teamname = 'พญานาคลากเธอไปทุบ'
+        else if (doc.id == 'g') teamname = 'กวางน้อยถอยไม่เป็น'
+        else if (doc.id == 'h') teamname = 'เพกาซัสหน้าเธอ'
         state.allteamcoin.push({
           ...doc.data(),
           team: doc.id,
+          teamname: teamname,
         })
       })
     } else state.allteamcoin = []
@@ -189,7 +199,6 @@ export default {
             state.group.push(state.allfriend[x])
           }
         } else {
-          console.log('wtf2')
           let x = state.allfriend.findIndex((each) => each.uid == element2.uid)
           state.group.push(state.allfriend[x])
         }

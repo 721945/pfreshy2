@@ -552,7 +552,7 @@ export default {
         .collection('group')
         .doc(state.authUser.group)
       const doc = await memberRef.get()
-      commit('LoadGroup', doc.data().g)
+      if (doc.data()) commit('LoadGroup', doc.data().g)
     } catch (error) {
       console.log(error.message)
     }
@@ -568,6 +568,7 @@ export default {
           const doc = await memberRef.get()
           let coinleft = parseInt(doc.data().coin) + parseInt(form.coin)
           const res = await memberRef.update({ coin: coinleft })
+
           commit('setGroupCoin', { ...data, coinleft: coinleft })
         } catch (error) {
           console.log(error.message)
@@ -579,6 +580,7 @@ export default {
   },
   async DeletMemberFromGroup({ commit, state }, form) {
     try {
+      console.log(form)
       let w = JSON.parse(JSON.stringify(form))
       w.forEach((element) => {
         delete element.picture

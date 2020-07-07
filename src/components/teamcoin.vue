@@ -1,10 +1,6 @@
 <template>
   <section v-if="this.teamCoin.length > 0">
-    <div
-      class="card card-x"
-      v-for="(eachteam, index) in teamCoin"
-      :key="eachteam.team"
-    >
+    <div class="card card-x" v-for="(eachteam, index) in teamCoin" :key="eachteam.team">
       <div class="card-body">
         <div>
           <font-awesome-icon
@@ -30,10 +26,8 @@
                     : false
                   : false
               "
-            >
-              YOUR TEAM [ {{ eachteam.team }} ]
-            </h5>
-            <h5 v-else>TEAM {{ eachteam.team }}</h5>
+            >[ {{ eachteam.teamname }} ]</h5>
+            <h5 v-else>{{ eachteam.teamname }}</h5>
             <h3>{{ eachteam.coin }}</h3>
           </div>
         </div>
@@ -51,18 +45,12 @@
         >
           <form>
             <b-input-group size="sm">
-              <b-input
-                type="number"
-                placeholder="จำนวน Coin "
-                min="0"
-                v-model="formTeam[index]"
-              ></b-input>
+              <b-input type="number" placeholder="จำนวน Coin " min="0" v-model="formTeam[index]"></b-input>
               <b-input-group-append>
                 <b-button
                   variant="outline-secondary"
                   @click="AddTeamCoin(eachteam.team, index)"
-                  >ตกลง</b-button
-                >
+                >ตกลง</b-button>
               </b-input-group-append>
             </b-input-group>
           </form>
@@ -81,18 +69,12 @@
         >
           <form>
             <b-input-group size="sm">
-              <b-input
-                type="number"
-                placeholder="จำนวน Coin "
-                min="0"
-                v-model="formTeam[index]"
-              ></b-input>
+              <b-input type="number" placeholder="จำนวน Coin " min="0" v-model="formTeam[index]"></b-input>
               <b-input-group-append>
                 <b-button
                   variant="outline-secondary"
                   @click="DisTeamCoin(eachteam.team, index)"
-                  >ตกลง</b-button
-                >
+                >ตกลง</b-button>
               </b-input-group-append>
             </b-input-group>
           </form>
@@ -111,6 +93,7 @@ export default {
     return {
       formTeam: [],
       teamCoin: [],
+      // teamName: ,
       user: {},
       st: 0,
     }
