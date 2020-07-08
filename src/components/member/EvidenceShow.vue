@@ -8,7 +8,7 @@
         variant="outline-primary"
         v-b-modal.modal-eve
         :disabled="isMoreThanfifty"
-      >{{isMoreThanfifty ? 'ไม่สามารถซื้อได้แล้ว !' :'ซื้อหลักฐาน' }} {{isMoreThanfifty }}</b-button>
+      >{{isMoreThanfifty ? 'ไม่สามารถซื้อได้แล้ว !' :'ซื้อหลักฐาน' }}</b-button>
       <div class="Evidence" :class="[users ? (users.boss == true ? 'yesboss' : 'noboss') : '']">
         <b-list-group v-if="evidences.length && users" style="text-align: left;">
           <b-list-group-item v-for="(evidence, index) in evidences" :key="evidence">
