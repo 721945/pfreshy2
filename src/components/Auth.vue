@@ -11,7 +11,7 @@
             class="in"
             id="username"
             v-model="formData.email"
-            placeholder="เลขนักศึกษา"
+            placeholder="Username"
             type="text"
             autocomplete="username"
           ></b-input>

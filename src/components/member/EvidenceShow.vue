@@ -42,12 +42,23 @@
             class="Mybuts"
             @click="buy"
             variant="outline-success"
-            :disabled="isValid || isMoreThanfifty"
+            :disabled="isValid || isMoreThanfifty || isBuyMoreThanFifty"
           >ซื้อ</b-button>
         </b-form>
-        <b-alert style="margin-top: 5px;" show variant="warning">หลักฐานชิ้นละ 500 coin</b-alert>
+        <b-alert
+          style="margin-top: 5px;"
+          show
+          variant="warning"
+        >หลักฐานชิ้นละ 500 coin | มีหลักฐาน 49 ชิ้น</b-alert>
         <p v-if="isValid">
           <b-alert style="margin-top: 5px;" show variant="danger">ไม่พอนะ !</b-alert>
+        </p>
+        <p v-if="isBuyMoreThanFifty">
+          <b-alert
+            style="margin-top: 5px;"
+            show
+            variant="danger"
+          >หลักฐานมี 49 ชิ้น ! ซื้อเกินไม่ได้นะ</b-alert>
         </p>
       </div>
     </b-modal>
@@ -85,6 +96,9 @@ export default {
     },
     isMoreThanfifty(){
       return this.evidences.length >= 49
+    },
+    isBuyMoreThanFifty(){
+      return this.tobuy >= (50 - this.evidences.length)
     }
   },
   beforeDestroy() {
