@@ -33,7 +33,7 @@
             </ol>
           </li>
         </ol>
-        <p style="color: red;" v-if="isValid">* COIN ไม่พอซื้อนะ !</p>
+        <p style="color: red;" v-if="isValid">* COIN ไม่พอ / เลือกอย่างน้อย 1 เลข</p>
         <div class="buy">
           <a style="margin: 10px;">{{ 'ราคา : ' + cost + ' coin' }}</a>
           <b-button
@@ -94,7 +94,7 @@ export default {
       return this.$store.getters.getUser
     },
     isValid() {
-      return !( this.users.coin < 0 && this.boughts <= 0 &&
+      return ( this.users.coin < 0 || this.lottery.length < 1 ||
         this.users.coin < this.costing
       )
     },
