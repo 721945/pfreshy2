@@ -40,9 +40,14 @@ export default {
   },
   methods: {
     donate() {
-      this.$store.dispatch('discountMoney', this.coindonate)
-      this.$store.dispatch('donate', this.coindonate)
-      this.$bvModal.hide('modal-test')
+      if(typeof this.coindonate == 'number'){
+        this.$store.dispatch('discountMoney', this.coindonate)
+        this.$store.dispatch('donate', this.coindonate)
+        this.$bvModal.hide('modal-test')
+      }
+      else{
+        alert('Please enter only number')
+      }
     },
     checkNum() {
       if (this.coindonate < 0) {

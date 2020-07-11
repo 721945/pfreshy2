@@ -92,14 +92,19 @@ export default {
   },
   methods: {
     async betSend() {
-      this.$store.dispatch('createBet', {
-        ...this.form,
+      if (typeof this.form.coin == 'number')
+      {
+        this.$store.dispatch('createBet', {
+          ...this.form,
         name1: this.users.name,
         name2: this.friend[0].name,
       })
       await this.$store.dispatch('discountMoney', this.form.coin)
       this.$router.push('/member/' + this.$route.params.id + '/bet')
-    },
+      }
+      else
+       alert('Please enter only number')
+      }
   },
   computed: {
     more() {

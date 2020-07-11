@@ -129,6 +129,7 @@ export default {
       this.index = index
     },
     async addCoin(){
+      if (typeof this.number == 'number'){
       await this.$store.dispatch('addCoin',{uid:this.uid , coin:this.number ,  index:this.index})
       this.items = this.$store.getters.getAllFriend
       this.uid = 0
@@ -136,8 +137,12 @@ export default {
       this.number = 0
       
       this.s = 2
+       }
+      else
+        console.log('Please enter only number');
     },
     async DiscountCoin(){
+       if (typeof this.number == 'number'){
       await this.$store.dispatch('addCoin',{uid:this.uid , coin:-this.number ,  index:this.index})
       this.items = this.$store.getters.getAllFriend
       
@@ -145,6 +150,9 @@ export default {
       this.index = 0
       this.number = 0
       this.s = 2
+       }
+      else
+        console.log('Please enter only number');
     },
     rowClicked(item) {
       if(item.selected){      

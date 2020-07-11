@@ -252,9 +252,14 @@ export default {
       const doc = await teamRef.get()
       const before = parseInt(doc.data().bought)
       const boughts = before + parseInt(buy)
-      const res = await teamRef.update({ bought: boughts })
-      const Eve = await this.$fireStore.collection('Evidence').doc('all').get()
-      commit('setEve', { ...Eve.data(), before: before, bought: boughts })
+      if (boughts < 49) {
+        const res = await teamRef.update({ bought: boughts })
+        const Eve = await this.$fireStore
+          .collection('Evidence')
+          .doc('all')
+          .get()
+        commit('setEve', { ...Eve.data(), before: before, bought: boughts })
+      }
     } catch (e) {
       console.log('Transaction failure:', e)
     }

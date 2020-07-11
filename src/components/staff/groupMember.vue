@@ -147,20 +147,29 @@ export default {
       this.index = index
     },
     async addCoin(){
-      await this.$store.dispatch('addCoinS',{uid:this.uid , coin:this.number ,  index:this.index})
+      if (typeof this.number == 'number'){
+        
+        await this.$store.dispatch('addCoinS',{uid:this.uid , coin:this.number ,  index:this.index})
       this.items = this.$store.getters.getGroup
       this.uid = 0
       this.index = 0
       this.number = 0
       this.s = 2
+      }
+      else
+        console.log('Please enter only number');
     },
     async DiscountCoin(){
-      await this.$store.dispatch('addCoinS',{uid:this.uid , coin:-this.number ,  index:this.index})
+      if (typeof this.number == 'number'){
+        await this.$store.dispatch('addCoinS',{uid:this.uid , coin:-this.number ,  index:this.index})
       this.items = this.$store.getters.getGroup
       this.uid = 0
       this.index = 0
       this.number = 0
       this.s = 2
+      }
+      else
+        console.log('Please enter only number');
     },
     rowClicked(item) {
       if(item.selected){      

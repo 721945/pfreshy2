@@ -35,8 +35,10 @@ export default {
     },methods:{
         changePassword(){
             var user = this.$fireAuth.currentUser;
+            console.log(user);
             user.updatePassword(this.input.password1).then(function() {
                 alert('เปลี่ยนรหัสสำเร็จ')
+                this.$router.push('/member')
             }).catch(function(error) {
             });
             // console.log(user)
