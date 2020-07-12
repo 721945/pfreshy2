@@ -36,7 +36,7 @@
             type="number"
             v-model.number="tobuy"
             min="0"
-            :max="this.cointeam / 500"
+            :max="this.cointeam / 200"
           ></b-input>
           <b-button
             class="Mybuts"
@@ -49,7 +49,7 @@
           style="margin-top: 5px;"
           show
           variant="warning"
-        >หลักฐานชิ้นละ 500 coin | มีหลักฐาน 49 ชิ้น</b-alert>
+        >หลักฐานชิ้นละ 200 coin | มีหลักฐาน 49 ชิ้น</b-alert>
         <p v-if="isValid">
           <b-alert style="margin-top: 5px;" show variant="danger">ไม่พอนะ !</b-alert>
         </p>
@@ -92,7 +92,7 @@ export default {
       return this.tobuy < 0 || this.cointeam <= 0 || this.cointeam < this.cost
     },
     cost() {
-      return this.tobuy * 500
+      return this.tobuy * 200
     },
     isMoreThanfifty(){
       return this.evidences.length >= 49
