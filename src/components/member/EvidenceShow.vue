@@ -106,15 +106,15 @@ export default {
   },
   methods: {
     buy() {
-      if (typeof this.evidences == 'number')
+      if (typeof this.tobuy == 'number')
       {
         if (this.evidences.length < 50){
           this.$store.dispatch('discountTeamCoin', this.cost)
           this.$store.dispatch('buyEve', this.tobuy)
           this.$bvModal.hide('modal-eve')
-      }
-      else
-        alert('ซื้อหลักฐานได้เพียง 49 ชิ้นเท่านั้น')
+        }
+        else
+          alert('ซื้อหลักฐานได้เพียง 49 ชิ้นเท่านั้น')
       }
       else
         alert('Please enter only number')
