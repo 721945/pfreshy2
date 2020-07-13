@@ -307,11 +307,17 @@ export default {
   // <!-- End Evidence -->
 
   // <!-- Bet -->
-  async createBet({ commit }, form) {
+  async createBet({ commit, state }, form) {
     const BetRef = this.$fireStore.collection('Bet')
     try {
       const date = Date().toLocaleString()
       const Res = await BetRef.doc().set({ ...form, date: date })
+      const LogRef = this.$fireStore.collection('log').doc().set({
+        title: 'Bet create',
+        data: form,
+        by: state.authUser.uid,
+        date: date,
+      })
     } catch (e) {
       console.log(e.message)
       return
@@ -589,7 +595,7 @@ export default {
       console.log(error.message)
     }
   },
-  async discountCoinTeamStaff({ commit }, form) {
+  async discountCoinTeamStaff({ commit, state }, form) {
     try {
       const teamRef = this.$fireStore.collection('coin').doc(form.team)
       const doc = await teamRef.get()

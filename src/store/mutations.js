@@ -166,7 +166,17 @@ export default {
     } else state.allteamcoin = []
   },
   setTeamCoinStaff(state, payload) {
+    let teamname = ''
+    if (payload.team == 'a') teamname = 'สคิลลาถลาลม'
+    else if (payload.team == 'b') teamname = 'กริฟฟินอย่ามาดิ้นกับพี่'
+    else if (payload.team == 'c') teamname = 'เมดูซ่าก็มาดิค๊าบ'
+    else if (payload.team == 'd') teamname = 'นกฟินิกส์จิกเด็กตาย'
+    else if (payload.team == 'e') teamname = 'สฟิงค์สุดสวิงริงโก้'
+    else if (payload.team == 'f') teamname = 'พญานาคลากเธอไปทุบ'
+    else if (payload.team == 'g') teamname = 'กวางน้อยถอยไม่เป็น'
+    else if (payload.team == 'h') teamname = 'เพกาซัสหน้าเธอ'
     state.allteamcoin[payload.index] = {
+      teamname: teamname,
       coin: payload.coin,
       team: payload.team,
     }
