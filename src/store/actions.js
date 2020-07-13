@@ -1,5 +1,4 @@
 import { auth } from 'firebase'
-
 export default {
   async nuxtServerInit({ dispatch, commit }, ctx) {
     if (this.$fireAuth === null) {
@@ -311,7 +310,8 @@ export default {
   async createBet({ commit }, form) {
     const BetRef = this.$fireStore.collection('Bet')
     try {
-      const Res = await BetRef.doc().set(form)
+      const date = Date().toLocaleString()
+      const Res = await BetRef.doc().set({ ...form, date: date })
     } catch (e) {
       console.log(e.message)
       return
@@ -369,11 +369,11 @@ export default {
   },
   async BetAccept({ commit, state }, bet) {
     try {
+      const date = Date().toLocaleString()
       const teamRef = this.$fireStore.collection('Bet').doc(bet.Betid)
       // console.log(bet)
-      const res = await teamRef.update({ accept: true })
+      const res = await teamRef.update({ accept: true, date: date })
       commit('setAccepted', bet)
-      const date = Date().toLocaleString()
       const LogRef = this.$fireStore.collection('log').doc().set({
         title: 'Bet accept',
         data: bet,
@@ -389,10 +389,7 @@ export default {
       const teamRef = this.$fireStore.collection('Bet').doc(bet.Betid)
       const res = await teamRef.delete()
       bet.read = false
-      const insert = await this.$fireStore
-        .collection('BetResult')
-        .doc(bet.Betid)
-        .set(bet)
+
       commit('setRefuse', bet)
       const date = Date().toLocaleString()
       const LogRef = this.$fireStore.collection('log').doc().set({
@@ -463,11 +460,12 @@ export default {
       } else {
         if (x.loser != '') {
           if (x.loser != state.authUser.uid) {
+            const date = Date().toLocaleString()
             bet.winner = state.authUser.uid
             const insert = await this.$fireStore
               .collection('BetResult')
               .doc(bet.Betid)
-              .set(bet)
+              .set({ ...bet, date: date })
             const delete1 = await teamRef.delete()
 
             const memberRef = this.$fireStore
@@ -480,7 +478,6 @@ export default {
             const res = await memberRef.update({ coin: coinleft })
             commit('setCoin', coinleft)
             commit('setWinLose', bet)
-            const date = Date().toLocaleString()
             const LogRef = this.$fireStore
               .collection('log')
               .doc()
@@ -524,10 +521,11 @@ export default {
         if (x.winner != '') {
           if (x.winner != state.authUser.uid) {
             bet.loser = state.authUser.uid
+            const date = Date().toLocaleString()
             const insert = await this.$fireStore
               .collection('BetResult')
               .doc(bet.Betid)
-              .set(bet)
+              .set({ ...bet, date: date })
             const delete1 = await teamRef.delete()
             const memberRef = this.$fireStore.collection('member').doc(x.winner)
             const memData = await memberRef.get().then((data) => {
@@ -537,7 +535,6 @@ export default {
             let coinleft = parseInt(memData.coin) + parseInt(bet.coin) * 2
             const res = await memberRef.update({ coin: coinleft })
             commit('setWinLose', bet)
-            const date = Date().toLocaleString()
             const LogRef = this.$fireStore
               .collection('log')
               .doc()
