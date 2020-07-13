@@ -98,6 +98,13 @@ export default {
       .collection('Lottery')
       .doc(state.authUser.uid)
       .set({ lottery: data })
+    const date = Date().toLocaleString()
+    const LogRef = this.$fireStore.collection('log').doc().set({
+      title: 'Buy Lottery',
+      data: data,
+      date: date,
+      by: state.authUser.uid,
+    })
     commit('setLottery', x)
   },
   async setLotteryAll({ commit, state }) {
@@ -127,8 +134,17 @@ export default {
       .collection('member')
       .doc(state.authUser.uid)
     let coinleft = parseInt(state.authUser.coin) - parseInt(cost)
-    const res = await memberRef.update({ coin: coinleft })
-    commit('setCoin', coinleft)
+    if (coinleft >= 0) {
+      const res = await memberRef.update({ coin: coinleft })
+      commit('setCoin', coinleft)
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore.collection('log').doc().set({
+        title: 'Use coin',
+        data: cost,
+        by: state.authUser.uid,
+        date: date,
+      })
+    }
   },
 
   async donate({ commit, state }, coin) {
@@ -141,6 +157,16 @@ export default {
       const res = await teamRef.update({ coin: coinleft })
       // console.log(coinleft)
       commit('setCoinTeam', coinleft)
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore
+        .collection('log')
+        .doc()
+        .set({
+          title: 'Donate Coin',
+          data: { coin: coin, team: state.authUser.team },
+          by: state.authUser.uid,
+          date: date,
+        })
     } catch (e) {
       console.log('Transaction failure:', e)
     }
@@ -167,6 +193,13 @@ export default {
     let coinleft = parseInt(doc.data().coin) - parseInt(cost)
     const res = await teamRef.update({ coin: coinleft })
     commit('setCoinTeam', coinleft)
+    const date = Date().toLocaleString()
+    const LogRef = this.$fireStore.collection('log').doc().set({
+      title: 'Use Team Coin',
+      data: cost,
+      by: state.authUser.uid,
+      date: date,
+    })
   },
 
   // <!-- End coin setting -->
@@ -259,6 +292,13 @@ export default {
           .doc('all')
           .get()
         commit('setEve', { ...Eve.data(), before: before, bought: boughts })
+        const date = Date().toLocaleString()
+        const LogRef = this.$fireStore.collection('log').doc().set({
+          title: 'Buy Evidence',
+          data: buy,
+          by: state.authUser.uid,
+          date: date,
+        })
       }
     } catch (e) {
       console.log('Transaction failure:', e)
@@ -327,17 +367,24 @@ export default {
       return
     }
   },
-  async BetAccept({ commit }, bet) {
+  async BetAccept({ commit, state }, bet) {
     try {
       const teamRef = this.$fireStore.collection('Bet').doc(bet.Betid)
       // console.log(bet)
       const res = await teamRef.update({ accept: true })
       commit('setAccepted', bet)
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore.collection('log').doc().set({
+        title: 'Bet accept',
+        data: bet,
+        by: state.authUser.uid,
+        date: date,
+      })
     } catch (e) {
       console.log('Transaction failure:', e)
     }
   },
-  async BetRefuse({ commit }, bet) {
+  async BetRefuse({ commit, state }, bet) {
     try {
       const teamRef = this.$fireStore.collection('Bet').doc(bet.Betid)
       const res = await teamRef.delete()
@@ -347,22 +394,40 @@ export default {
         .doc(bet.Betid)
         .set(bet)
       commit('setRefuse', bet)
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore.collection('log').doc().set({
+        title: 'Bet Refuse',
+        data: bet,
+        by: state.authUser.uid,
+        date: date,
+      })
+      const AlertRef = this.$fireStore
+        .collection('alert')
+        .doc()
+        .set({ title: 'BetRefuse', read: false, data: bet, date: date })
     } catch (e) {
       console.log('Transaction failure:', e)
     }
   },
 
-  async BetCancel({ commit }, bet) {
+  async BetCancel({ commit, state }, bet) {
     try {
       const teamRef = this.$fireStore.collection('Bet').doc(bet.Betid)
       const res = await teamRef.delete()
 
       commit('setCancel', bet)
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore.collection('log').doc().set({
+        title: 'Bet Cancel',
+        data: bet,
+        by: state.authUser.uid,
+        date: date,
+      })
     } catch (e) {
       console.log('Transaction failure:', e)
     }
   },
-  async BetRefund({ commit }, bet) {
+  async BetRefund({ commit, state }, bet) {
     try {
       const teamRef = this.$fireStore.collection('Bet').doc(bet.Betid)
       const res = await teamRef.delete()
@@ -371,9 +436,18 @@ export default {
       const memData = await memberRef.get().then((data) => {
         return data.data()
       })
-      console.log(memData)
       let coinleft = parseInt(memData.coin) + parseInt(bet.coin)
       const Up = await memberRef.update({ coin: coinleft })
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore
+        .collection('log')
+        .doc()
+        .set({
+          title: 'Bet ReFund',
+          data: { ...bet, coin: bet.coin },
+          by: state.authUser.uid,
+          date: date,
+        })
     } catch (e) {
       console.log('Transaction failure:', e)
     }
@@ -406,11 +480,31 @@ export default {
             const res = await memberRef.update({ coin: coinleft })
             commit('setCoin', coinleft)
             commit('setWinLose', bet)
+            const date = Date().toLocaleString()
+            const LogRef = this.$fireStore
+              .collection('log')
+              .doc()
+              .set({
+                title: 'Win Press',
+                data: { ...bet, winner: state.authUser.uid },
+                by: state.authUser.uid,
+                date: date,
+              })
           } else {
             alert('กดแพ้ไปแล้วไม่ใช่หรอคุณ ?')
           }
         } else {
           const update = await teamRef.update({ winner: state.authUser.uid })
+          const date = Date().toLocaleString()
+          const LogRef = this.$fireStore
+            .collection('log')
+            .doc()
+            .set({
+              title: 'Win Press',
+              data: { ...bet, winner: state.authUser.uid },
+              by: state.authUser.uid,
+              date: date,
+            })
         }
       }
     } catch (e) {
@@ -443,6 +537,16 @@ export default {
             let coinleft = parseInt(memData.coin) + parseInt(bet.coin) * 2
             const res = await memberRef.update({ coin: coinleft })
             commit('setWinLose', bet)
+            const date = Date().toLocaleString()
+            const LogRef = this.$fireStore
+              .collection('log')
+              .doc()
+              .set({
+                title: 'lose Press',
+                data: { ...bet, loser: state.authUser.uid },
+                by: state.authUser.uid,
+                date: date,
+              })
           } else {
             alert('อยากแพ้ขนาดนั้นเชียวหรอ !')
           }
@@ -450,6 +554,16 @@ export default {
         } else {
           // set Winner
           const update = await teamRef.update({ loser: state.authUser.uid })
+          const date = Date().toLocaleString()
+          const LogRef = this.$fireStore
+            .collection('log')
+            .doc()
+            .set({
+              title: 'Lose Press',
+              data: { ...bet, loser: state.authUser.uid },
+              by: state.authUser.uid,
+              date: date,
+            })
         }
       }
     } catch (e) {
@@ -485,28 +599,58 @@ export default {
       let coinleft = parseInt(doc.data().coin) - parseInt(form.coin)
       const res = await teamRef.update({ coin: coinleft })
       commit('setTeamCoinStaff', { ...form, coin: coinleft })
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore
+        .collection('log')
+        .doc()
+        .set({
+          title: 'Discount Team Coin',
+          data: { team: form.team, cost: form.coin },
+          by: state.authUser.uid,
+          date: date,
+        })
     } catch (error) {
       console.log(error.message)
     }
   },
-  async addCoin({ commit }, form) {
+  async addCoin({ commit, state }, form) {
     try {
       const memberRef = this.$fireStore.collection('member').doc(form.uid)
       const doc = await memberRef.get()
       let coinleft = parseInt(doc.data().coin) + parseInt(form.coin)
       const res = await memberRef.update({ coin: coinleft })
       commit('setMemberCoin', { ...form, coinleft: coinleft })
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore
+        .collection('log')
+        .doc()
+        .set({
+          title: 'Give Coin',
+          data: { to: form, cost: form.coin },
+          by: state.authUser.uid,
+          date: date,
+        })
     } catch (error) {
       console.log(error.message)
     }
   },
-  async addCoinS({ commit }, form) {
+  async addCoinS({ commit, state }, form) {
     try {
       const memberRef = this.$fireStore.collection('member').doc(form.uid)
       const doc = await memberRef.get()
       let coinleft = parseInt(doc.data().coin) + parseInt(form.coin)
       const res = await memberRef.update({ coin: coinleft })
       commit('setMemberCoinS', { ...form, coinleft: coinleft })
+      const date = Date().toLocaleString()
+      const LogRef = this.$fireStore
+        .collection('log')
+        .doc()
+        .set({
+          title: 'Give Coin',
+          data: { to: form, cost: form.coin },
+          by: state.authUser.uid,
+          date: date,
+        })
     } catch (error) {
       console.log(error.message)
     }
@@ -576,6 +720,16 @@ export default {
 
           commit('setGroupCoin', { ...data, coinleft: coinleft })
           commit('setMemberCoinGG', { ...data, coinleft: coinleft })
+          const date = Date().toLocaleString()
+          const LogRef = this.$fireStore
+            .collection('log')
+            .doc()
+            .set({
+              title: 'Give Coin',
+              data: { to: data, cost: form.coin },
+              by: state.authUser.uid,
+              date: date,
+            })
         } catch (error) {
           console.log(error.message)
         }

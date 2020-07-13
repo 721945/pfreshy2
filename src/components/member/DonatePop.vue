@@ -1,7 +1,12 @@
 <template>
   <div>
     <!-- Using modifiers -->
-    <b-button v-b-modal.modal-test variant="outline-success" class="Mybut">บริจาคเงินเข้าตี้ค้าบ</b-button>
+    <b-button
+      v-b-modal.modal-test
+      variant="outline-success"
+      class="Mybut"
+      @click="loadcoin"
+    >บริจาคเงินเข้าตี้ค้าบ</b-button>
     <!-- The modal -->
     <b-modal id="modal-test" hide-footer centered size="md" header-bg-variant="success">
       <div class="cont">
@@ -41,9 +46,14 @@ export default {
   methods: {
     donate() {
       if(typeof this.coindonate == 'number'){
+        this.coinmember = this.$store.getters.getCoin
+        if (this.coinmember - this.coindonate >= 0){
         this.$store.dispatch('discountMoney', this.coindonate)
         this.$store.dispatch('donate', this.coindonate)
         this.$bvModal.hide('modal-test')
+        }
+        else
+          alert(' !')
       }
       else{
         alert('Please enter only number')

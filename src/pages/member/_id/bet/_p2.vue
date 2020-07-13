@@ -18,7 +18,7 @@
         users ? 'คุณมี ' + users.coin + ' coin' : '' }}
       </span>
       <b-form>
-        <label for="topic">ต้องการจะท้าให้เพื่อนทำอะไร</label>
+        <label for="topic">ต้องการจะท้าให้เพื่อนทำอะไร {{time}}</label>
         <b-input id="topic" type="text" v-model="form.topic" placeholder="สิ่งที่ต้องการจะท้า"></b-input>
         <label for="coin">มูลค่า</label>
         <b-input
@@ -126,6 +126,9 @@ export default {
     users() {
       return this.$store.getters.getUser
     },
+    time(){
+      return new Date().toLocaleString();
+    }
   },
 
   async mounted() {
