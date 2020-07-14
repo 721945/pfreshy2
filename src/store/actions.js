@@ -1442,7 +1442,7 @@ export default {
 
             const memberRef = this.$fireStore.collection("member").doc(id);
             const doc = await memberRef.get();
-            let coinleft = parseInt(doc.data().coin) + parseInt("0");
+            let coinleft = parseInt(doc.data().coin) + parseInt("500");
             const res = await memberRef.update({ coin: coinleft });
 
             // alert
