@@ -120,15 +120,20 @@ export default {
   },
   methods: {
     async DisTeamCoin(team, int) {
-      await this.$store.dispatch('discountCoinTeamStaff', {
-        coin: this.formTeam[int],
+      if(typeof this.formTeam[int] == 'number'){
+        await this.$store.dispatch('discountCoinTeamStaff', {
+          coin: this.formTeam[int],
         team: team,
         index: int,
       })
       this.teamCoin = this.$store.getters.getAllTeamCoin
       this.formTeam = []
+      }
+      else
+        alert('Please enter only number')
     },
     async AddTeamCoin(team, int) {
+      if(typeof this.formTeam[int] == 'number'){
       await this.$store.dispatch('discountCoinTeamStaff', {
         coin: -this.formTeam[int],
         team: team,
@@ -136,6 +141,9 @@ export default {
       })
       this.teamCoin = await this.$store.getters.getAllTeamCoin
       this.formTeam = []
+      }
+      else
+        alert('Please enter only number')
     },
   },
 }

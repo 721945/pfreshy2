@@ -9,4 +9,6 @@ export default () => ({
   allteamcoin: [],
   group: [],
   memberbet: [],
-})
+  alertRead: [],
+  alertUnread: [],
+});

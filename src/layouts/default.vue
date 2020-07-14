@@ -2,7 +2,7 @@
   <div>
     <client-only>
       <div class="Nav">
-        <b-navbar variant="faded" type="light" class="t">
+        <b-navbar variant="faded" type="light">
           <b-navbar-brand href="/">
             <img src="~assets/2.png" width="50px" heifgt="50px" alt="Kitten" />
             <a>PRE-FRESHY</a>
@@ -35,6 +35,7 @@
                 style="padding: 10px; margin: 0 10px;"
               >{{ ' มี ' + users.coin + ' coin' }}</span>
               <!-- มีกล่องจดหมาย BET ด้วย -->
+              <alert />
               <b-button variant="outline-danger" @click="signout">LOGOUT</b-button>
             </div>
             <div class="navbar" v-else>
@@ -47,7 +48,7 @@
       </div>
 
       <div class="Nav1">
-        <b-navbar variant="light" type="light" class="t" toggleable>
+        <b-navbar variant="light" type="light" toggleable>
           <b-navbar-brand href="/">
             <img src="~assets/2.png" width="50px" heifgt="50px" alt="Kitten" />
             <a>PRE-FRESHY</a>
@@ -55,11 +56,12 @@
           </b-navbar-brand>
           <div class="navbar" v-if="users">
             <div class="ttt">
-              <span style="padding: 5px; margin: 0 5px;">สวัสดีคุณ {{ ' ' + users.name }}</span>
+              <span style="padding: 5px; margin: 0 10px;">สวัสดีคุณ {{ ' ' + users.name }}</span>
               <span
                 v-if="users.role == 'member'"
                 style="padding: 5px; margin: 0 5px;"
               >{{ ' มี ' + users.coin + ' coin' }}</span>
+              <alert style="margin-left:10px;" />
             </div>
           </div>
           <b-navbar-toggle target="navbar-toggle-collapse">
@@ -112,7 +114,11 @@
   </div>
 </template>
 <script>
+import alert from '@/components/alert'
 export default {
+  components:{
+    alert
+  },
   data() {
     return {
       user: '',
@@ -177,6 +183,10 @@ body {
 .t {
   overflow: hidden;
 }
+.ttt {
+  display: flex;
+  align-items: center;
+}
 .Nav {
   background: white;
   box-shadow: 6px 6px 7px rgba(0, 0, 0, 0.15);
@@ -186,7 +196,7 @@ body {
   background: white;
   box-shadow: 6px 6px 7px rgba(0, 0, 0, 0.15);
 }
-@media only screen and (max-width: 1050px) {
+@media only screen and (max-width: 1080px) {
   /* .ulNav {
     display: block;
   } */
@@ -196,5 +206,25 @@ body {
   .Nav1 {
     display: block;
   }
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 40px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 40px;
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>
