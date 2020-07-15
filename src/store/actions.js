@@ -177,7 +177,7 @@ export default {
   },
   async LoadTeamcoin({ commit, state }, team) {
     if (state.authUser) {
-      const messageRef = this.$fireStore.collection(" coin ").doc(team);
+      const messageRef = this.$fireStore.collection("coin").doc(team);
       try {
         const messageDoc = await messageRef.get().then((data) => {
           return data.data().coin;
@@ -190,7 +190,7 @@ export default {
     }
   },
   async discountTeamCoin({ commit, state }, cost) {
-    const teamRef = this.$fireStore.collection(" coin ").doc(
+    const teamRef = this.$fireStore.collection("coin").doc(
       state.authUser.team,
     );
     const doc = await teamRef.get();
@@ -1188,7 +1188,7 @@ export default {
   },
   async getAllTeamCoin({ commit }, form) {
     try {
-      const docRef = this.$fireStore.collection(" coin ");
+      const docRef = this.$fireStore.collection("coin");
       const doc = await docRef.get();
       commit("setAllTeamCoin", doc);
     } catch (error) {
@@ -1197,7 +1197,7 @@ export default {
   },
   async discountCoinTeamStaff({ commit, state }, form) {
     try {
-      const teamRef = this.$fireStore.collection(" coin ").doc(form.team);
+      const teamRef = this.$fireStore.collection("coin").doc(form.team);
       const doc = await teamRef.get();
       let coinleft = parseInt(doc.data().coin) - parseInt(form.coin);
       const res = await teamRef.update({ coin: coinleft });
