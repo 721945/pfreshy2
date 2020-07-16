@@ -152,12 +152,11 @@ export default {
   async donate({ commit, state }, coin) {
     try {
       const teamRef = this.$fireStore
-        .collection(' coin ')
+        .collection('coin')
         .doc(state.authUser.team)
       const doc = await teamRef.get()
       let coinleft = parseInt(doc.data().coin) + parseInt(coin)
       const res = await teamRef.update({ coin: coinleft })
-      // console.log(coinleft)
       commit('setCoinTeam', coinleft)
       const date = Date().toLocaleString()
       const LogRef = this.$fireStore
