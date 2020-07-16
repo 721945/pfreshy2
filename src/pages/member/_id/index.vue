@@ -18,7 +18,6 @@
         </nuxt-link>
         <changepassword />
 
-        <Lottery />
       </div>
       <div class="listfriend cards">
         <TeamList />
@@ -33,7 +32,6 @@ import showEvidence from '@/components/member/EvidenceShow'
 import PicturePop from '@/components/member/PicturePop'
 import DonatePop from '@/components/member/DonatePop'
 import TeamList from '@/components/member/TeamList'
-import Lottery from '@/components/member/Lottery'
 import changepassword from '@/components/member/changepassword'
 import cointeam from '@/components/teamcoin'
 export default {
@@ -50,7 +48,6 @@ export default {
     PicturePop,
     TeamList,
     DonatePop,
-    Lottery,
     cointeam,
     changepassword,
   },
