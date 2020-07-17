@@ -45,7 +45,12 @@
         >
           <form>
             <b-input-group size="sm">
-              <b-input type="number" placeholder="จำนวน Coin " min="0" v-model="formTeam[index]"></b-input>
+              <b-input
+                type="number"
+                placeholder="จำนวน Coin "
+                min="0"
+                v-model.number="formTeam[index]"
+              ></b-input>
               <b-input-group-append>
                 <b-button
                   variant="outline-secondary"
@@ -69,7 +74,12 @@
         >
           <form>
             <b-input-group size="sm">
-              <b-input type="number" placeholder="จำนวน Coin " min="0" v-model="formTeam[index]"></b-input>
+              <b-input
+                type="number"
+                placeholder="จำนวน Coin "
+                min="0"
+                v-model.number="formTeam[index]"
+              ></b-input>
               <b-input-group-append>
                 <b-button
                   variant="outline-secondary"
@@ -133,6 +143,7 @@ export default {
         alert('Please enter only number')
     },
     async AddTeamCoin(team, int) {
+      console.log(typeof this.formTeam[int]);
       if(typeof this.formTeam[int] == 'number'){
       await this.$store.dispatch('discountCoinTeamStaff', {
         coin: -this.formTeam[int],
